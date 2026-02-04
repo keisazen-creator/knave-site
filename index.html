@@ -1,178 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Knave | Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knave Studio</title>
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ---------- Global ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      font-family: "Inter", sans-serif;
-      background: #ffffff;
-      color: #475569;
-      line-height: 1.6;
+      background: linear-gradient(135deg, #fdfcff, #e6f4ff);
+      color: #1f2933;
+      text-align: center;
     }
 
-    h1, h2, h3 {
-      color: #1e293b;
-    }
-
-    section {
-      padding: 4rem 8%;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.7rem 1.6rem;
-      background: #6366f1;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      opacity: 0.9;
-    }
-
-    /* ---------- Navigation ---------- */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 8%;
-      position: sticky;
-      top: 0;
-      background: white;
-      border-bottom: 1px solid #eee;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: #1e293b;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #475569;
-    }
-
-    .nav-links a:hover {
-      color: #6366f1;
-    }
-
-    .menu-btn {
-      display: none;
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-
-    /* ---------- Hero ---------- */
+    /* Hero Section */
     .hero {
-      height: 75vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      background: #f8fafc;
-      padding: 0 10%;
+      padding: 30px 20px;
     }
 
     .hero h1 {
-      font-size: clamp(2.2rem, 6vw, 3.5rem);
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #5b5cff;
+      letter-spacing: 1px;
     }
 
     .hero p {
-      max-width: 600px;
-      margin-bottom: 2rem;
+      max-width: 400px;
+      margin-bottom: 25px;
+      color: #333;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
 
-    /* ---------- Grid ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+    /* Luffy Image */
+    .hero img {
+      width: 240px;
+      max-width: 90%;
+      border-radius: 14px;
+      margin-bottom: 30px;
+      border: 3px solid #ffd56b;
+      box-shadow: 0 10px 25px rgba(91,92,255,0.25);
     }
 
-    .card {
-      background: #f8fafc;
-      padding: 1.8rem;
+    /* Instagram Button */
+    .insta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffd56b, #ffb703);
+      color: #222;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255,183,3,0.4);
+      margin-bottom: 40px;
+    }
+
+    .insta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,183,3,0.6);
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 70px 20px;
+      background: #ffffff;
+      border-top: 2px solid #eef2ff;
+    }
+
+    .contact h2 {
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      color: #5b5cff;
+    }
+
+    /* Email Button (Kept Color) */
+    .email-btn {
+      display: inline-block;
+      background: #6366f1;
+      color: white;
+      text-decoration: none;
+      padding: 13px 28px;
       border-radius: 10px;
-      text-align: center;
-      transition: 0.3s;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 15px rgba(99,102,241,0.4);
     }
 
-    .card:hover {
-      background: white;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-
-    /* ---------- Titles ---------- */
-    .title {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .title h2 {
-      font-size: 2rem;
-    }
-
-    /* ---------- Footer ---------- */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #f8fafc;
-      font-size: 0.9rem;
-    }
-
-    /* ---------- Mobile ---------- */
-    @media (max-width: 768px) {
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 65px;
-        left: 0;
-        width: 100%;
-        background: white;
-        flex-direction: column;
-        padding: 2rem 0;
-        border-bottom: 1px solid #eee;
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
-      section {
-        padding: 3rem 6%;
-      }
+    .email-btn:hover {
+      background: #4f46e5;
+      transform: scale(1.07);
+      box-shadow: 0 8px 20px rgba(79,70,229,0.5);
     }
 
   </style>
@@ -180,121 +115,39 @@
 
 <body>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#" class="logo">Knave</a>
+  <!-- Hero Section -->
+  <section class="hero">
 
-    <div class="menu-btn" id="menu">☰</div>
-
-    <ul class="nav-links" id="nav">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero" id="home">
     <h1>Knave Studio</h1>
-    <p>We design simple, beautiful, and functional digital experiences.</p>
-    <a href="#work" class="btn">View Work</a>
-  </header>
 
-  <!-- About -->
-  <section id="about">
-    <div class="title">
-      <h2>About Me</h2>
-    </div>
+    <p>I’m gonna be King of the Pirates!</p>
 
-    <p style="max-width:700px; margin:auto; text-align:center;">
-      Hi, I’m Knave — a creative designer and developer focused on building
-      modern, fast, and user-friendly websites.
-    </p>
-  </section>
+    <img 
+      src="https://static.beebom.com/wp-content/uploads/2025/01/Luffys-Hito-Hito-no-Mi-Model-Nika.jpg?w=1024"
+      alt="Luffy Gear 5">
 
-  <!-- Services -->
-  <section id="services">
-    <div class="title">
-      <h2>Services</h2>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-        <h3>Web Design</h3>
-        <p>Modern and clean website designs.</p>
-      </div>
-
-      <div class="card">
-        <h3>Development</h3>
-        <p>Fast and responsive websites.</p>
-      </div>
-
-      <div class="card">
-        <h3>Branding</h3>
-        <p>Strong digital identity.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Work -->
-  <section id="work" style="background:#f8fafc;">
-
-    <div class="title">
-      <h2>My Work</h2>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">Project One</div>
-      <div class="card">Project Two</div>
-      <div class="card">Project Three</div>
-
-    </div>
+    <!-- Instagram -->
+    <a
+      href="https://www.instagram.com/nocturne.kira?igsh=dGoxYXloZmVhN3B1"
+      target="_blank"
+      class="insta-btn">
+      @nocturne.kira
+    </a>
 
   </section>
 
   <!-- Contact -->
-  <section id="contact">
+  <section class="contact">
 
-    <div class="title">
-      <h2>Contact</h2>
-      <p>Let’s work together</p>
-    </div>
+    <h2>Contact</h2>
 
-    <div style="text-align:center;">
-      <a href="mailto:hello@example.com" class="btn">
-        Email Me
-      </a>
-    </div>
+    <a
+      href="mailto:keisazen@gmail.com"
+      class="email-btn">
+      Email Me
+    </a>
 
   </section>
-
-  <!-- Footer -->
-  <footer>
-    © 2026 Knave. All rights reserved.
-  </footer>
-
-  <!-- Script -->
-  <script>
-
-    const menu = document.getElementById("menu");
-    const nav = document.getElementById("nav");
-
-    menu.addEventListener("click", () => {
-      nav.classList.toggle("active");
-    });
-
-    document.querySelectorAll(".nav-links a").forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("active");
-      });
-    });
-
-  </script>
 
 </body>
 </html>
