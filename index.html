@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Knave - Personal portfolio of a pirate enthusiast and developer.">
-  <meta name="keywords" content="portfolio, developer, pirate, Luffy, GitHub, Instagram">
-  <title>Knave</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Knave - Personal portfolio of a pirate enthusiast and developer, inspired by One Piece." />
+  <meta name="keywords" content="portfolio, developer, pirate, One Piece, Luffy, GitHub, Instagram, anime" />
+  <title>Knave - King of the Pirates Portfolio</title>
+
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
   <style>
     * {
       margin: 0;
@@ -20,6 +24,7 @@
       background: linear-gradient(135deg, #fdfcff, #e6f4ff);
       color: #1f2933;
       text-align: center;
+      overflow-x: hidden;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
@@ -28,26 +33,35 @@
       color: #e6e6e6;
     }
 
+    /* Background Decorations */
+    .bg-elements {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
       padding: 15px 20px;
-      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      border-bottom: 2px solid #ffd56b;
     }
 
     body.dark-mode nav {
-      background: rgba(26, 26, 46, 0.9);
+      background: rgba(26,26,46,0.95);
+      border-bottom-color: #5b5cff;
     }
 
     nav .logo {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: #5b5cff;
     }
@@ -55,366 +69,208 @@
     nav ul {
       list-style: none;
       display: flex;
-      gap: 20px;
+      gap: 25px;
     }
 
-    nav ul li a {
+    nav a {
       text-decoration: none;
-      color: #333;
+      color: inherit;
       font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    body.dark-mode nav ul li a {
-      color: #e6e6e6;
-    }
-
-    nav ul li a:hover {
-      color: #5b5cff;
     }
 
     .dark-mode-toggle {
       background: none;
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       cursor: pointer;
-      color: #333;
-      transition: color 0.3s ease;
+      color: inherit;
     }
 
-    body.dark-mode .dark-mode-toggle {
-      color: #e6e6e6;
-    }
-
+    /* Hero */
     .hero {
       min-height: 100vh;
+      padding: 120px 20px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 100px 20px 30px;
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 15px;
+      font-size: clamp(2.5rem, 6vw, 4rem);
       color: #5b5cff;
-      letter-spacing: 1px;
-      animation: fadeInUp 1s ease-out;
+      margin-bottom: 15px;
     }
 
     .hero p {
-      max-width: 600px;
+      max-width: 720px;
+      font-size: 1.3rem;
       margin-bottom: 25px;
-      color: #333;
-      font-size: 1.2rem;
       font-weight: 600;
-      animation: fadeInUp 1s ease-out 0.2s both;
-    }
-
-    body.dark-mode .hero p {
-      color: #e6e6e6;
     }
 
     .hero img {
-      width: 240px;
-      max-width: 90%;
-      border-radius: 14px;
+      width: 260px;
+      border-radius: 18px;
+      border: 4px solid #ffd56b;
       margin-bottom: 30px;
-      border: 3px solid #ffd56b;
-      box-shadow: 0 10px 25px rgba(91,92,255,0.25);
-      animation: fadeInUp 1s ease-out 0.4s both;
     }
 
     .social-links {
       display: flex;
-      gap: 15px;
-      margin-bottom: 40px;
-      animation: fadeInUp 1s ease-out 0.6s both;
+      gap: 20px;
     }
 
     .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #ffd56b, #ffb703);
-      color: #222;
-      text-decoration: none;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
-      font-size: 20px;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(255,183,3,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      color: #222;
+      background: linear-gradient(135deg, #ffd56b, #ffb703);
+      text-decoration: none;
     }
 
-    .social-links a:nth-child(2) {
-      background: #111827;
-      color: white;
-      box-shadow: 0 5px 15px rgba(17,24,39,0.4);
-    }
-
-    .social-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255,183,3,0.6);
-    }
-
-    .social-links a:nth-child(2):hover {
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    }
-
-    .about, .projects, .contact {
-      padding: 70px 20px;
+    .about, .skills, .projects, .contact {
+      padding: 80px 20px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
     }
 
-    .about {
-      background: #ffffff;
-      border-top: 2px solid #eef2ff;
-    }
-
-    body.dark-mode .about {
-      background: #1a1a2e;
-    }
-
-    .about h2, .projects h2, .contact h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
       color: #5b5cff;
     }
 
-    .about p {
-      max-width: 800px;
-      margin: 0 auto;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .projects {
-      background: linear-gradient(135deg, #fdfcff, #e6f4ff);
-    }
-
-    body.dark-mode .projects {
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-    }
-
+    .skills-grid,
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
     }
 
+    .skill-card,
     .project-card {
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
+    body.dark-mode .skill-card,
     body.dark-mode .project-card {
       background: #16213e;
-      color: #e6e6e6;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .project-card h3 {
-      margin-bottom: 10px;
-      color: #5b5cff;
-    }
-
-    .project-card p {
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .contact {
-      background: #ffffff;
-      border-top: 2px solid #eef2ff;
-    }
-
-    body.dark-mode .contact {
-      background: #1a1a2e;
     }
 
     .contact-form {
-      max-width: 500px;
-      margin: 0 auto;
+      max-width: 600px;
+      margin: auto;
     }
 
-    .contact-form input, .contact-form textarea {
+    .contact-form input,
+    .contact-form textarea {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 1rem;
-      background: white;
-      color: #333;
-    }
-
-    body.dark-mode .contact-form input, body.dark-mode .contact-form textarea {
-      background: #16213e;
-      border-color: #333;
-      color: #e6e6e6;
-    }
-
-    .contact-form button {
-      background: #6366f1;
-      color: white;
-      border: none;
-      padding: 13px 28px;
+      padding: 15px;
+      margin-bottom: 20px;
       border-radius: 10px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 15px rgba(99,102,241,0.4);
-    }
-
-    .contact-form button:hover {
-      background: #4f46e5;
-      transform: scale(1.07);
-      box-shadow: 0 8px 20px rgba(79,70,229,0.5);
+      border: 2px solid #ddd;
+      font-size: 1rem;
     }
 
     footer {
       background: #111827;
       color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      padding: 30px 20px;
+      border-top: 3px solid #ffd56b;
     }
 
     @media (max-width: 768px) {
       nav ul {
         display: none;
       }
-      .hero h1 {
-        font-size: 2rem;
-      }
-      .social-links {
-        flex-direction: column;
-        align-items: center;
-      }
     }
   </style>
 </head>
+
 <body>
+  <div class="bg-elements"></div>
+
   <nav>
     <div class="logo">Knave</div>
     <ul>
       <li><a href="#hero">Home</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+    <button class="dark-mode-toggle" id="darkModeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
   </nav>
 
   <section id="hero" class="hero">
     <h1>Knave</h1>
-    <p>I’m gonna be King of the Pirates!</p>
-    <img src="https://static.beebom.com/wp-content/uploads/2025/01/Luffys-Hito-Hito-no-Mi-Model-Nika.jpg?w=1024" alt="Luffy Gear 5 - Monkey D. Luffy in his Gear 5 form">
+    <p>Developer by skill. Pirate by heart. Sailing the Grand Line of code in search of the One Piece.</p>
+    <img src="https://via.placeholder.com/300" alt="Knave profile image">
     <div class="social-links">
-      <a href="https://www.instagram.com/nocturne.kira?igsh=dGoxYXloZmVhN3B1" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://github.com/keisazen-creator" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
     </div>
   </section>
 
   <section id="about" class="about">
     <h2>About Me</h2>
-    <p>I'm a passionate developer and pirate enthusiast, inspired by the adventures of Monkey D. Luffy. With a love for coding and creativity, I build projects that bring ideas to life. Whether it's web development or exploring new technologies, I'm always on a quest for innovation.</p>
+    <p>I’m a developer inspired by adventure, freedom, and anime culture. I build clean, expressive, and animated experiences for the web.</p>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">HTML & CSS</div>
+      <div class="skill-card">JavaScript</div>
+      <div class="skill-card">React</div>
+      <div class="skill-card">UI / UX</div>
+    </div>
   </section>
 
   <section id="projects" class="projects">
-    <h2>My Projects</h2>
-    <div class="projects-grid" id="projectsGrid">
-      <!-- Projects will be dynamically loaded here -->
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Pirate Portfolio</h3>
+        <p>A One Piece–inspired personal portfolio.</p>
+      </div>
+      <div class="project-card">
+        <h3>Anime Tracker</h3>
+        <p>Track episodes, arcs, and favorite characters.</p>
+      </div>
     </div>
   </section>
 
   <section id="contact" class="contact">
-    <h2>Contact Me</h2>
-    <form class="contact-form" id="contactForm">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <h2>Contact</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message"></textarea>
       <button type="submit">Send Message</button>
     </form>
   </section>
 
   <footer>
-    <p>&copy; 2023 Knave. All rights reserved.</p>
+    <p>© 2026 Knave</p>
+    <p class="quote">“If you don’t take risks, you can’t create a future.”</p>
   </footer>
 
   <script>
-    // Dark Mode Toggle
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const body = document.body;
-
-    darkModeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      const icon = darkModeToggle.querySelector('i');
-      icon.classList.toggle('fa-moon');
-      icon.classList.toggle('fa-sun');
-    });
-
-    // Smooth Scrolling
-    document.querySelectorAll('nav a').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Fetch GitHub Repos
-    async function fetchRepos() {
-      try {
-        const response = await fetch('https://api.github.com/users/keisazen-creator/repos?sort=updated');
-        const repos = await response.json();
-        const projectsGrid = document.getElementById('projectsGrid');
-        repos.slice(0, 6).forEach(repo => {
-          const card = document.createElement('div');
-          card.className = 'project-card';
-          card.innerHTML = `
-            <h3>${repo.name}</h3>
-            <p>${repo.description || 'No description available.'}</p>
-            <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-          `;
-          projectsGrid.appendChild(card);
-        });
-      } catch (error) {
-        console.error('Error fetching repos:', error);
-      }
-    }
-
-    fetchRepos();
-
-    // Contact Form Submission
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // In a real app, send data to a server. For now, just log it.
-      const formData = new FormData(this);
-      console.log('Form submitted:', Object.fromEntries(formData));
-      alert('Message sent! (This is a demo)');
-      this.reset();
+    const toggle = document.getElementById('darkModeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
     });
   </script>
 </body>
