@@ -393,9 +393,11 @@
         repos.slice(0, 6).forEach(repo => {
           const card = document.createElement('div');
           card.className = 'project-card';
+          // Improved description handling: Trim whitespace and handle null/empty cases safely
+          const description = repo.description?.trim() || 'No description available.';
           card.innerHTML = `
             <h3>${repo.name}</h3>
-            <p>${repo.description.trim() || 'No description available.'}</p>
+            <p>${description}</p>
             <a href="${repo.html_url}" target="_blank">View on GitHub</a>
           `;
           projectsGrid.appendChild(card);
