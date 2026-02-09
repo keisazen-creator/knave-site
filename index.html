@@ -395,7 +395,7 @@
           card.className = 'project-card';
           card.innerHTML = `
             <h3>${repo.name}</h3>
-            <p>${repo.description || 'No description available.'}</p>
+            <p>${repo.description.trim() || 'No description available.'}</p>
             <a href="${repo.html_url}" target="_blank">View on GitHub</a>
           `;
           projectsGrid.appendChild(card);
