@@ -1,10 +1,24 @@
-// =============================
+// =================================
+// SIDE MENU (HAMBURGER)
+// =================================
+
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+
+if (menuBtn && sideMenu) {
+  menuBtn.addEventListener("click", () => {
+    sideMenu.classList.toggle("active");
+  });
+}
+
+
+
+// =================================
 // SOUND TOGGLE WITH MUSIC
-// =============================
+// =================================
 
 const soundBtn = document.getElementById("soundToggle");
 
-// load music from repo
 const bgMusic = new Audio("onepiece.webm");
 bgMusic.loop = true;
 bgMusic.volume = 0.6;
@@ -12,39 +26,46 @@ bgMusic.volume = 0.6;
 let soundOn = false;
 
 // default icon
-soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+if (soundBtn) {
 
-soundBtn.addEventListener("click", () => {
+  soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
 
-  if (!soundOn) {
+  soundBtn.addEventListener("click", () => {
 
-    bgMusic.play()
-      .then(() => {
-        soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        soundOn = true;
-      })
-      .catch(() => {
-        console.log("Audio blocked until user interaction.");
-      });
+    if (!soundOn) {
 
-  } else {
+      bgMusic.play()
+        .then(() => {
+          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+          soundOn = true;
+        })
+        .catch(() => {
+          console.log("Audio blocked until user interaction.");
+        });
 
-    bgMusic.pause();
-    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-    soundOn = false;
+    } else {
 
-  }
+      bgMusic.pause();
+      soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      soundOn = false;
 
-});
+    }
+
+  });
+
+}
 
 
-// =============================
+
+// =================================
 // FETCH GITHUB PROJECTS
-// =============================
+// =================================
 
 async function fetchRepos() {
 
   const projectsGrid = document.getElementById("projectsGrid");
+
+  if (!projectsGrid) return;
 
   try {
 
@@ -94,8 +115,7 @@ async function fetchRepos() {
 
   } catch (error) {
 
-    projectsGrid.innerHTML =
-      "<h3>Failed to load projects</h3>";
+    projectsGrid.innerHTML = "<h3>Failed to load projects</h3>";
 
   }
 
@@ -104,33 +124,37 @@ async function fetchRepos() {
 fetchRepos();
 
 
-// =============================
+
+// =================================
 // CONTACT FORM
-// =============================
+// =================================
 
 const contactForm = document.getElementById("contactForm");
 
-contactForm.addEventListener("submit", function (e) {
+if (contactForm) {
 
-  e.preventDefault();
+  contactForm.addEventListener("submit", function () {
 
-  const btn = this.querySelector("button");
+    const btn = this.querySelector("button");
 
-  btn.innerHTML = "Message Sent";
+    btn.innerHTML = "Message Sent";
 
-  setTimeout(() => {
+    setTimeout(() => {
 
-    btn.innerHTML = "Send Message";
-    this.reset();
+      btn.innerHTML = "Send Message";
+      this.reset();
 
-  }, 3000);
+    }, 3000);
 
-});
+  });
+
+}
 
 
-// =============================
+
+// =================================
 // CHATBOT
-// =============================
+// =================================
 
 (function () {
 
@@ -141,6 +165,8 @@ contactForm.addEventListener("submit", function (e) {
   const chatMessages = document.getElementById("knave-chat-messages");
   const chatInput = document.getElementById("knave-chat-input");
   const sendBtn = document.getElementById("knave-send-btn");
+
+  if (!chatWindow) return;
 
 
   window.toggleKnaveChat = function () {
@@ -226,12 +252,10 @@ contactForm.addEventListener("submit", function (e) {
         "https://api.openai.com/v1/chat/completions",
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${OPENAI_API_KEY}`,
           },
-
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
             messages: [
@@ -299,7 +323,9 @@ contactForm.addEventListener("submit", function (e) {
   sendBtn.onclick = handleSend;
 
   chatInput.onkeypress = (e) => {
+
     if (e.key === "Enter") handleSend();
+
   };
 
 })();
