@@ -3,443 +3,562 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Knave - Pirate Developer Portfolio">
-  <title>Knave | King of the Code</title>
+  <title>Knave | The Pirate Coder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Bangers&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
   <style>
-    /* === DESIGN SYSTEM === */
-    :root {
-      --yellow: #FFD400;
-      --red: #FF3B30;
-      --black: #111111;
-      --white: #FFFFFF;
-      --blue: #3388FF;
-      --ocean: #00AEEF;
-      --parchment: #f4e4bc;
-      --border-thick: 4px solid var(--black);
-      --shadow-hard: 6px 6px 0px var(--black);
-      --radius-card: 15px;
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Fredoka', sans-serif;
+      font-family: 'Press Start 2P', cursive;
+      user-select: none;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--yellow);
-      color: var(--black);
-      overflow-x: hidden;
-      cursor: url('https://cur.cursors-4u.net/games/gam-4/gam373.cur'), auto; /* Anchor Cursor */
-    }
-
-    /* === LOADING SCREEN === */
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--black);
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: var(--white);
-      transition: opacity 0.5s ease-out;
-    }
-    .skull-loader {
-      font-size: 5rem;
-      animation: skullPulse 1s infinite alternate;
-    }
-    @keyframes skullPulse { from { transform: scale(1); } to { transform: scale(1.2); } }
-
-    /* === UTILITIES & ANIMATIONS === */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-
-    .comic-btn {
-      background: var(--red);
-      color: var(--white);
-      border: var(--border-thick);
-      padding: 12px 28px;
-      font-family: 'Bangers', cursive;
-      font-size: 1.5rem;
-      letter-spacing: 1px;
-      cursor: pointer;
-      box-shadow: var(--shadow-hard);
-      transition: 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .comic-btn:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--black); }
-
-    /* === NAVIGATION === */
-    nav {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--white);
-      border: var(--border-thick);
-      border-radius: 50px;
-      padding: 10px 30px;
-      display: flex;
-      gap: 30px;
-      align-items: center;
-      box-shadow: var(--shadow-hard);
-      z-index: 1000;
-      width: fit-content;
-    }
-    nav a { text-decoration: none; color: var(--black); font-weight: 700; transition: 0.2s; }
-    nav a.active { color: var(--red); text-decoration: underline; }
-    
-    .nav-icons button { background: none; border: none; cursor: pointer; font-size: 1.2rem; }
-
-    /* === HERO SECTION === */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(var(--yellow), #FFB800);
-      position: relative;
+      background-color: #1a1a1a;
       overflow: hidden;
+      color: #333;
     }
 
-    .hero h1 {
-      font-family: 'Bangers', cursive;
-      font-size: clamp(3rem, 10vw, 7rem);
-      -webkit-text-stroke: 3px var(--black);
-      color: var(--white);
-      text-shadow: 8px 8px 0 var(--black);
-      z-index: 10;
-      transform: rotate(-2deg);
-    }
-
-    .clouds i {
-      position: absolute;
-      color: rgba(255,255,255,0.8);
-      font-size: 4rem;
-      animation: cloudMove 20s linear infinite;
-    }
-
-    @keyframes cloudMove {
-      from { left: -10%; }
-      to { left: 110%; }
-    }
-
-    /* Waves Animation */
-    .waves {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 15vh;
-      min-height: 100px;
-    }
-    .parallax-waves > use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
-    .parallax-waves > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
-    .parallax-waves > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
-    .parallax-waves > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
-    @keyframes move-forever { 0% { transform: translate3d(-90px,0,0); } 100% { transform: translate3d(85px,0,0); } }
-
-    /* === PROJECTS (WANTED POSTERS) === */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      padding: 40px 20px;
-    }
-
-    .project-card {
-      background: var(--parchment);
-      border: 10px solid #5d4037;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-      transition: 0.3s;
-      box-shadow: 10px 10px 0 #3e2723;
-    }
-    .project-card::before {
-      content: "WANTED";
-      font-family: 'Bangers', cursive;
-      font-size: 2.5rem;
+    canvas {
       display: block;
-      margin-bottom: 10px;
-    }
-    .project-card:hover { transform: scale(1.05) rotate(1deg); }
-
-    .project-stats {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 15px;
-      font-weight: 700;
+      width: 100vw;
+      height: 100vh;
+      image-rendering: pixelated;
     }
 
-    /* === CHATBOT UI === */
-    #knave-chat-window {
-      width: 350px;
-      border: var(--border-thick);
-      background: white;
-      border-radius: 20px;
-      box-shadow: var(--shadow-hard);
-      display: none;
-      flex-direction: column;
+    .overlay {
       position: fixed;
-      bottom: 110px;
-      right: 30px;
-      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 100;
     }
 
-    .quick-replies {
-      display: flex;
-      gap: 5px;
-      padding: 10px;
-      overflow-x: auto;
-      background: #f0f0f0;
+    .overlay.active { display: flex; }
+
+    #start-screen h1 {
+      color: #FFD400;
+      text-shadow: 4px 4px 0 #FF3B30;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.5;
     }
-    .quick-btn {
-      background: var(--blue);
-      color: white;
-      border: 2px solid var(--black);
-      padding: 5px 10px;
-      border-radius: 15px;
+
+    #start-screen p {
+      color: #fff;
       font-size: 0.8rem;
-      white-space: nowrap;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    #start-btn {
+      background: #FF3B30;
+      color: white;
+      border: 4px solid #fff;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 5px 5px 0 #000;
+      transition: transform 0.1s;
+    }
+
+    #start-btn:active {
+      transform: translate(5px, 5px);
+      box-shadow: none;
+    }
+
+    .rpg-box {
+      background: #fdf6e3;
+      border: 6px solid #222;
+      border-radius: 4px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      padding: 30px;
+      position: relative;
+      box-shadow: 10px 10px 0 rgba(0,0,0,0.5);
+      overflow-y: auto;
+    }
+
+    #close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #FF3B30;
+      color: white;
+      border: 2px solid #222;
+      padding: 5px 10px;
       cursor: pointer;
     }
 
-    /* MOBILE ADJUSTMENTS */
-    @media (max-width: 600px) {
-      nav { width: 90%; gap: 15px; font-size: 0.8rem; }
-      #knave-chat-window { width: calc(100% - 40px); right: 20px; }
+    #modal-content h2 {
+      color: #FF3B30;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      border-bottom: 4px dashed #ccc;
+      padding-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    #modal-content p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .pixel-list {
+      list-style: square;
+      padding-left: 20px;
+      font-size: 0.75rem;
+      line-height: 2;
+    }
+
+    .pixel-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 4px solid #222;
+      font-family: inherit;
+      font-size: 0.7rem;
+    }
+
+    .pixel-form button {
+      background: #FFD400;
+      border: 4px solid #222;
+      padding: 10px 20px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .pixel-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #0066cc;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-bottom: 2px solid #0066cc;
+    }
+
+    .project-item {
+      background: #eee;
+      border: 2px solid #222;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .project-item h3 { font-size: 0.9rem; margin-bottom: 10px; color: #3388FF;}
+    .project-item p { font-size: 0.65rem; margin-bottom: 10px;}
+    .project-item a { font-size: 0.7rem; color: #FF3B30; text-decoration: none;}
+
+    #mobile-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      display: none; 
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+
+    .d-pad, .action-pad {
+      pointer-events: auto;
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+
+    .d-btn, .a-btn {
+      background: rgba(255, 255, 255, 0.5);
+      border: 4px solid #222;
+      color: #222;
+      font-weight: bold;
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 20px;
+    }
+
+    .d-btn:active, .a-btn:active { background: rgba(255, 212, 0, 0.8); }
+
+    .up { top: 0; left: 52px; }
+    .down { bottom: 0; left: 52px; }
+    .left { top: 52px; left: 0; }
+    .right { top: 52px; right: 0; }
+
+    .a-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      right: 20px;
+      bottom: 20px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .rpg-box { padding: 15px; }
+      #modal-content p, .pixel-list { font-size: 0.6rem; }
     }
   </style>
-</head>
+  </head>
 <body>
 
-  <div id="loading-screen">
-    <div class="skull-loader"><i class="fas fa-skull-crossbones"></i></div>
-    <h2 style="font-family:'Bangers'; margin-top: 20px;">Readying the Ship...</h2>
+  <div id="start-screen" class="overlay active">
+    <h1>KNAVE PIRATE PORTFOLIO</h1>
+    <p>Use WASD / Arrows to Move. Press 'E' to Interact.</p>
+    <button id="start-btn">SET SAIL</button>
   </div>
 
-  <nav id="main-nav">
-    <a href="#hero" class="active">Home</a>
-    <a href="#about">Lore</a>
-    <a href="#projects">Bounties</a>
-    <a href="#contact">Contact</a>
-    <div class="nav-icons">
-      <button onclick="toggleAudio()"><i id="audio-icon" class="fas fa-volume-up"></i></button>
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="mobile-controls">
+    <div class="d-pad">
+      <button class="d-btn up" id="btn-up">▲</button>
+      <button class="d-btn left" id="btn-left">◀</button>
+      <button class="d-btn right" id="btn-right">▶</button>
+      <button class="d-btn down" id="btn-down">▼</button>
     </div>
-  </nav>
+    <div class="action-pad">
+      <button class="a-btn" id="btn-action">E</button>
+    </div>
+  </div>
 
-  <section id="hero" class="hero">
-    <div class="clouds">
-      <i class="fas fa-cloud" style="top: 15%; animation-duration: 25s;"></i>
-      <i class="fas fa-cloud" style="top: 30%; animation-duration: 35s; opacity: 0.5;"></i>
+  <div id="modal-container" class="overlay">
+    <div class="rpg-box">
+      <button id="close-modal">X</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <div id="content-templates" style="display: none;">
+    <div id="content-about">
+      <h2>Tavern: About Me</h2>
+      <p>"Yo ho ho! I'm Knave, a developer sailing the Grand Line of code. I build interactive web experiences, creative applications, and hunt for the ultimate digital treasure."</p>
     </div>
 
-    <h1>KING OF THE CODE.</h1>
-    <div class="reveal" style="z-index: 10;">
-      <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;">Frontend Developer | Pirate | Dreamer</p>
-      <a href="#projects" class="comic-btn">View Bounties <i class="fas fa-compass"></i></a>
+    <div id="content-projects">
+      <h2>Pirate Ship: Bounties</h2>
+      <div id="github-projects">Charting the maps...</div>
     </div>
 
-    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-      <defs>
-        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-      </defs>
-      <g class="parallax-waves">
-        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-      </g>
-    </svg>
-  </section>
-
-  <section id="about" style="padding: 100px 20px; background: white; text-align: center;">
-    <div class="reveal">
-      <h2 style="font-family:'Bangers'; font-size: 4rem;">Captain's Log</h2>
-      <div style="max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8;">
-        Ahoy! I'm a developer who builds digital treasures. I specialize in turning complex ideas into 
-        vibrant, high-performance interfaces. My tech stack is my crew, and we're ready to sail 
-        the vast oceans of the internet!
-      </div>
+    <div id="content-skills">
+      <h2>Treasure Chest: Skills</h2>
+      <ul class="pixel-list">
+        <li>JavaScript (Haki Level: Advanced)</li>
+        <li>React & Vue (Devil Fruits)</li>
+        <li>HTML5 Canvas (Navigation)</li>
+        <li>CSS3 / Animations (Shipbuilding)</li>
+      </ul>
     </div>
-  </section>
 
-  <section id="projects" style="padding: 80px 0;">
-    <h2 style="text-align: center; font-family:'Bangers'; font-size: 4rem;">Most Wanted Repos</h2>
-    <div class="projects-grid" id="github-projects">
-      </div>
-  </section>
-
-  <section id="contact" style="padding: 100px 20px; background: var(--black); color: white; text-align: center;">
-    <div class="reveal">
-      <h2 style="font-family:'Bangers'; font-size: 3rem; color: var(--yellow);">Send a Den Den Mushi</h2>
-      <form id="contact-form" style="max-width: 500px; margin: 40px auto; display: flex; flex-direction: column; gap: 20px;">
-        <input type="text" placeholder="Your Pirate Name" required style="padding:15px; border-radius:10px; border:none;">
-        <input type="email" placeholder="Your Vivre Card (Email)" required style="padding:15px; border-radius:10px; border:none;">
-        <textarea placeholder="Your Message" rows="5" style="padding:15px; border-radius:10px; border:none;"></textarea>
-        <button type="submit" class="comic-btn">Fire the Cannons!</button>
+    <div id="content-contact">
+      <h2>Den Den Mushi: Contact</h2>
+      <p>Send a message across the seas!</p>
+      <form class="pixel-form" onsubmit="event.preventDefault(); alert('Message sent via News Coo!');">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Vivre Card (Email)" required>
+        <button type="submit">FIRE!</button>
       </form>
     </div>
-  </section>
 
-  <div id="knave-chat-window">
-    <div style="background: var(--yellow); padding: 15px; font-weight: 700; border-bottom: var(--border-thick); border-radius: 15px 15px 0 0; display:flex; justify-content: space-between;">
-      <span>⚓ Navigator Nami</span>
-      <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer;">×</button>
-    </div>
-    <div id="chat-content" style="height: 300px; overflow-y: auto; padding: 15px; background: #fff9e6; display: flex; flex-direction: column; gap: 10px;"></div>
-    <div class="quick-replies">
-      <button class="quick-btn" onclick="sendQuick('Tell me a joke')">Tell a Joke 🍖</button>
-      <button class="quick-btn" onclick="sendQuick('Hire the Captain')">Hire Me 💰</button>
-    </div>
-    <div style="padding: 10px; border-top: 3px solid #ddd; display: flex;">
-      <input type="text" id="chat-input" placeholder="Speak to the navigator..." style="flex:1; padding: 8px; border-radius: 20px; border: 2px solid #000;">
-      <button onclick="handleChat()" style="margin-left:5px; background: var(--red); color:white; border:2px solid #000; border-radius:50%; width:35px;">></button>
+    <div id="content-experience">
+      <h2>Marine Base: Record</h2>
+      <ul class="pixel-list">
+        <li>2024 - Captain @ Pirate Web Studio</li>
+        <li>2022 - First Mate @ Tech Island Corp</li>
+        <li>2020 - Cabin Boy @ Code Academy</li>
+      </ul>
+      <a href="#" class="pixel-link">Download Wanted Poster (Resume)</a>
     </div>
   </div>
-
-  <div id="chat-toggle" onclick="toggleChat()" style="position:fixed; bottom:30px; right:30px; background:var(--blue); color:white; width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; border:var(--border-thick); box-shadow:var(--shadow-hard); z-index:2001;">
-    <i class="fas fa-comment"></i>
-  </div>
-
-  <audio id="bg-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
-
   <script>
-    /* === CORE MODULES === */
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-    // 1. Loading & Initialization
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loading-screen');
-      setTimeout(() => {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
-      }, 1500);
-      initReveal();
-      fetchBounties();
-    });
+    let gameState = 'START'; 
+    let animationFrameId;
 
-    // 2. Scroll Reveal Logic
-    function initReveal() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            updateNav(entry.target.id);
-          }
-        });
-      }, { threshold: 0.3 });
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-      document.querySelectorAll('section').forEach(section => observer.observe(section));
+    const TILE_SIZE = 64;
+    const MAP_COLS = 30;
+    const MAP_ROWS = 30;
+    const WORLD_WIDTH = MAP_COLS * TILE_SIZE;
+    const WORLD_HEIGHT = MAP_ROWS * TILE_SIZE;
+
+    const camera = { x: 0, y: 0 };
+
+    const map = [];
+    for (let y = 0; y < MAP_ROWS; y++) {
+      let row = [];
+      for (let x = 0; x < MAP_COLS; x++) {
+        let distFromCenter = Math.sqrt(Math.pow(x - MAP_COLS/2, 2) + Math.pow(y - MAP_ROWS/2, 2));
+        if (distFromCenter < 8) row.push(2); 
+        else if (distFromCenter < 11) row.push(1); 
+        else row.push(0); 
+      }
+      map.push(row);
     }
 
-    function updateNav(id) {
-      document.querySelectorAll('nav a').forEach(a => {
-        a.classList.remove('active');
-        if (a.getAttribute('href') === `#${id}`) a.classList.add('active');
+    const player = {
+      x: WORLD_WIDTH / 2,
+      y: WORLD_HEIGHT / 2,
+      width: 32,
+      height: 48,
+      speed: 5,
+      color: '#FF3B30', 
+      facing: 'down'
+    };
+
+    const interactables = [
+      { id: 'about', x: WORLD_WIDTH/2 - 64, y: WORLD_HEIGHT/2 - 128, w: 128, h: 96, color: '#8B4513', label: 'TAVERN', textOffset: 20 },
+      { id: 'skills', x: WORLD_WIDTH/2 + 128, y: WORLD_HEIGHT/2, w: 48, h: 48, color: '#FFD400', label: 'CHEST', textOffset: -10 },
+      { id: 'projects', x: WORLD_WIDTH/2, y: WORLD_HEIGHT/2 + 256, w: 192, h: 128, color: '#3388FF', label: 'PIRATE SHIP', textOffset: 40 },
+      { id: 'experience', x: WORLD_WIDTH/2 - 192, y: WORLD_HEIGHT/2 - 256, w: 160, h: 160, color: '#A9A9A9', label: 'MARINE BASE', textOffset: 40 },
+      { id: 'contact', x: WORLD_WIDTH/2 - 256, y: WORLD_HEIGHT/2 + 64, w: 32, h: 48, color: '#FF69B4', label: 'DEN DEN MUSHI', textOffset: -10 }
+    ];
+
+    const npcs = [
+      { x: WORLD_WIDTH/2 + 64, y: WORLD_HEIGHT/2 - 64, w: 32, h: 32, color: '#fff', dx: 1, dy: 0, timer: 0 },
+      { x: WORLD_WIDTH/2 - 128, y: WORLD_HEIGHT/2, w: 32, h: 32, color: '#ccc', dx: 0, dy: -1, timer: 50 }
+    ];
+
+    const keys = { w: false, a: false, s: false, d: false, e: false };
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'w' || e.key === 'ArrowUp') keys.w = true;
+      if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = true;
+      if (e.key === 's' || e.key === 'ArrowDown') keys.s = true;
+      if (e.key === 'd' || e.key === 'ArrowRight') keys.d = true;
+      if (e.key.toLowerCase() === 'e') handleAction();
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'w' || e.key === 'ArrowUp') keys.w = false;
+      if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = false;
+      if (e.key === 's' || e.key === 'ArrowDown') keys.s = false;
+      if (e.key === 'd' || e.key === 'ArrowRight') keys.d = false;
+    });
+
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (isTouch) {
+      document.getElementById('mobile-controls').style.display = 'flex';
+      
+      const bindTouch = (id, key) => {
+        const btn = document.getElementById(id);
+        btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
+        btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = false; });
+      };
+      
+      bindTouch('btn-up', 'w');
+      bindTouch('btn-left', 'a');
+      bindTouch('btn-down', 's');
+      bindTouch('btn-right', 'd');
+      
+      document.getElementById('btn-action').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleAction();
       });
     }
 
-    // 3. GitHub Bounty Fetcher
-    async function fetchBounties() {
-      const grid = document.getElementById('github-projects');
+    function checkCollision(nx, ny) {
+      if (nx < 0 || ny < 0 || nx + player.width > WORLD_WIDTH || ny + player.height > WORLD_HEIGHT) return true;
+      
+      for (let obj of interactables) {
+        if (nx < obj.x + obj.w && nx + player.width > obj.x &&
+            ny < obj.y + obj.h && ny + player.height > obj.y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function update() {
+      if (gameState !== 'PLAY') return;
+
+      let nx = player.x;
+      let ny = player.y;
+
+      if (keys.w) ny -= player.speed;
+      if (keys.s) ny += player.speed;
+      if (keys.a) nx -= player.speed;
+      if (keys.d) nx += player.speed;
+
+      if (!checkCollision(nx, player.y)) player.x = nx;
+      if (!checkCollision(player.x, ny)) player.y = ny;
+
+      camera.x = player.x + player.width / 2 - canvas.width / 2;
+      camera.y = player.y + player.height / 2 - canvas.height / 2;
+
+      npcs.forEach(npc => {
+        npc.timer++;
+        if (npc.timer > 100) {
+          const dirs = [[1,0], [-1,0], [0,1], [0,-1], [0,0]];
+          const rand = dirs[Math.floor(Math.random() * dirs.length)];
+          npc.dx = rand[0];
+          npc.dy = rand[1];
+          npc.timer = 0;
+        }
+        npc.x += npc.dx * 2;
+        npc.y += npc.dy * 2;
+      });
+    }
+
+    function getNearbyObject() {
+      const range = 40; 
+      for (let obj of interactables) {
+        if (player.x < obj.x + obj.w + range && player.x + player.width > obj.x - range &&
+            player.y < obj.y + obj.h + range && player.y + player.height > obj.y - range) {
+          return obj;
+        }
+      }
+      return null;
+    }
+
+    function handleAction() {
+      if (gameState !== 'PLAY') return;
+      const obj = getNearbyObject();
+      if (obj) openModal(obj.id);
+    }
+
+    let time = 0; 
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.save();
+      ctx.translate(-camera.x, -camera.y);
+
+      time += 0.05;
+
+      const startCol = Math.max(0, Math.floor(camera.x / TILE_SIZE));
+      const endCol = Math.min(MAP_COLS, Math.ceil((camera.x + canvas.width) / TILE_SIZE));
+      const startRow = Math.max(0, Math.floor(camera.y / TILE_SIZE));
+      const endRow = Math.min(MAP_ROWS, Math.ceil((camera.y + canvas.height) / TILE_SIZE));
+
+      for (let y = startRow; y < endRow; y++) {
+        for (let x = startCol; x < endCol; x++) {
+          let tile = map[y][x];
+          let px = x * TILE_SIZE;
+          let py = y * TILE_SIZE;
+
+          if (tile === 0) {
+            ctx.fillStyle = (Math.sin(x + time) > 0.5) ? '#1E90FF' : '#00BFFF';
+          } else if (tile === 1) {
+            ctx.fillStyle = '#F4A460'; 
+          } else if (tile === 2) {
+            ctx.fillStyle = '#32CD32'; 
+          }
+          ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+        }
+      }
+
+      npcs.forEach(npc => {
+        ctx.fillStyle = npc.color;
+        let bounce = Math.abs(Math.sin(time * 2)) * 4;
+        ctx.fillRect(npc.x, npc.y - bounce, npc.w, npc.h);
+      });
+
+      interactables.forEach(obj => {
+        ctx.fillStyle = obj.color;
+        ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
+        
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.fillRect(obj.x, obj.y + obj.h - 10, obj.w, 10);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '10px "Press Start 2P"';
+        ctx.textAlign = 'center';
+        ctx.fillText(obj.label, obj.x + obj.w/2, obj.y - obj.textOffset);
+      });
+
+      ctx.fillStyle = player.color;
+      let pBounce = (keys.w || keys.a || keys.s || keys.d) ? Math.abs(Math.sin(time * 4)) * 6 : 0;
+      ctx.fillRect(player.x, player.y - pBounce, player.width, player.height);
+      
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.fillRect(player.x, player.y + player.height - 4, player.width, 4);
+
+      const nearObj = getNearbyObject();
+      if (nearObj) {
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(player.x - 10, player.y - 40 - pBounce, 50, 25);
+        ctx.fillStyle = '#000';
+        ctx.font = '12px "Press Start 2P"';
+        ctx.fillText('E', player.x + player.width/2, player.y - 22 - pBounce);
+      }
+
+      ctx.restore();
+    }
+
+    function loop() {
+      update();
+      draw();
+      animationFrameId = requestAnimationFrame(loop);
+    }
+
+    const startScreen = document.getElementById('start-screen');
+    const modalContainer = document.getElementById('modal-container');
+    const modalContent = document.getElementById('modal-content');
+
+    document.getElementById('start-btn').addEventListener('click', () => {
+      startScreen.classList.remove('active');
+      gameState = 'PLAY';
+      loop(); 
+    });
+
+    function openModal(id) {
+      gameState = 'MODAL';
+      keys.w = keys.a = keys.s = keys.d = false; 
+
+      const template = document.getElementById(`content-${id}`);
+      modalContent.innerHTML = template.innerHTML;
+      modalContainer.classList.add('active');
+
+      if (id === 'projects') fetchGitHubProjects();
+    }
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+      modalContainer.classList.remove('active');
+      gameState = 'PLAY';
+    });
+
+    async function fetchGitHubProjects() {
+      const container = document.getElementById('github-projects');
       try {
         const response = await fetch('https://api.github.com/users/keisazen-creator/repos?sort=updated');
         const repos = await response.json();
-        grid.innerHTML = repos.slice(0, 6).map(repo => `
-          <div class="project-card reveal">
-            <h3 style="font-family:'Bangers'; font-size:1.8rem;">${repo.name}</h3>
-            <p style="font-weight:600; min-height:50px;">${repo.description || 'A treasure worth fighting for.'}</p>
-            <div class="project-stats">
-              <span><i class="fas fa-star" style="color:var(--yellow)"></i> ${repo.stargazers_count}</span>
-              <span><i class="fas fa-code-branch" style="color:var(--blue)"></i> ${repo.forks_count}</span>
-            </div>
-            <p style="font-size:0.8rem; margin: 10px 0;">Updated: ${new Date(repo.updated_at).toLocaleDateString()}</p>
-            <a href="${repo.html_url}" target="_blank" class="comic-btn" style="font-size:1rem; padding:5px 15px;">Plunder</a>
-          </div>
-        `).join('');
-      } catch (e) {
-        grid.innerHTML = "<h3>The Marines blocked the signal! (API Error)</h3>";
+        
+        container.innerHTML = ''; 
+        repos.slice(0, 4).forEach(repo => {
+          const div = document.createElement('div');
+          div.className = 'project-item';
+          div.innerHTML = `
+            <h3>${repo.name}</h3>
+            <p>${repo.description || 'A mysterious treasure with no description.'}</p>
+            <a href="${repo.html_url}" target="_blank">>> VIEW BOUNTY</a>
+          `;
+          container.appendChild(div);
+        });
+      } catch (error) {
+        container.innerHTML = '<p style="color:red">Failed to load bounties. The connection to the Grand Line was lost!</p>';
       }
     }
-
-    // 4. Chatbot Personality
-    function toggleChat() {
-      const win = document.getElementById('knave-chat-window');
-      win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-      if(win.style.display === 'flex' && document.getElementById('chat-content').children.length === 0) {
-        addChatMsg("bot", "Ahoy! I'm Nami, the Navigator. Where should we set sail?");
-      }
-    }
-
-    function addChatMsg(type, text) {
-      const content = document.getElementById('chat-content');
-      const msg = document.createElement('div');
-      msg.style.padding = "10px";
-      msg.style.borderRadius = "10px";
-      msg.style.maxWidth = "80%";
-      msg.style.fontWeight = "600";
-      msg.style.background = type === 'bot' ? 'white' : 'var(--blue)';
-      msg.style.color = type === 'bot' ? 'black' : 'white';
-      msg.style.alignSelf = type === 'bot' ? 'flex-start' : 'flex-end';
-      msg.style.border = "2px solid black";
-      msg.innerText = text;
-      content.appendChild(msg);
-      content.scrollTop = content.scrollHeight;
-    }
-
-    function sendQuick(text) {
-      addChatMsg('user', text);
-      setTimeout(() => {
-        const response = text.includes('Hire') 
-          ? "Wise choice! Send a Den Den Mushi (contact form) and let's conquer the Grand Line!" 
-          : "Why did the pirate cross the road? To get to the 'Second' mate! Yo ho ho!";
-        addChatMsg('bot', response);
-      }, 800);
-    }
-
-    // 5. Audio Toggle
-    let isPlaying = false;
-    function toggleAudio() {
-      const audio = document.getElementById('bg-music');
-      const icon = document.getElementById('audio-icon');
-      if (isPlaying) {
-        audio.pause();
-        icon.className = 'fas fa-volume-mute';
-      } else {
-        audio.play().catch(() => alert("Interact with the page first to play music!"));
-        icon.className = 'fas fa-volume-up';
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // 6. Contact Feedback
-    document.getElementById('contact-form').onsubmit = (e) => {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.innerText = "SUCCESS! 💥";
-      btn.style.background = "#4CAF50";
-      e.target.reset();
-      setTimeout(() => {
-        btn.innerText = "Fire the Cannons!";
-        btn.style.background = "var(--red)";
-      }, 3000);
-    };
   </script>
-</body>
+  </body>
 </html>
