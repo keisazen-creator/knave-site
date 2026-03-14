@@ -4,24 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Knave - Pirate Developer Portfolio">
-  <title>Knave | King of the Code</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Bangers&display=swap" rel="stylesheet">
+  <title>Knave | The Pirate Coder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
   <style>
-    /* === DESIGN SYSTEM === */
+    /* === DESIGN SYSTEM & VARIABLES === */
     :root {
       --yellow: #FFD400;
       --red: #FF3B30;
       --black: #111111;
       --white: #FFFFFF;
       --blue: #3388FF;
-      --ocean: #00AEEF;
-      --parchment: #f4e4bc;
+      --bg-color: var(--yellow);
       --border-thick: 4px solid var(--black);
       --shadow-hard: 6px 6px 0px var(--black);
-      --radius-card: 15px;
+      --shadow-hover: 10px 10px 0px var(--black);
+      --radius-pill: 50px;
+      --radius-card: 20px;
     }
 
     * {
@@ -29,55 +28,76 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Fredoka', sans-serif;
+      scroll-behavior: smooth;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--yellow);
+      background-color: var(--bg-color);
       color: var(--black);
       overflow-x: hidden;
-      cursor: url('https://cur.cursors-4u.net/games/gam-4/gam373.cur'), auto; /* Anchor Cursor */
+      background-image: radial-gradient(var(--black) 2px, transparent 2px);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
     }
-
-    /* === LOADING SCREEN === */
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--black);
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: var(--white);
-      transition: opacity 0.5s ease-out;
-    }
-    .skull-loader {
-      font-size: 5rem;
-      animation: skullPulse 1s infinite alternate;
-    }
-    @keyframes skullPulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
     /* === UTILITIES & ANIMATIONS === */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
+    .comic-box {
+      background: var(--white);
+      border: var(--border-thick);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s ease-in-out;
+    }
 
     .comic-btn {
       background: var(--red);
       color: var(--white);
       border: var(--border-thick);
-      padding: 12px 28px;
-      font-family: 'Bangers', cursive;
-      font-size: 1.5rem;
-      letter-spacing: 1px;
+      border-radius: var(--radius-pill);
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      font-weight: 700;
       cursor: pointer;
+      text-transform: uppercase;
       box-shadow: var(--shadow-hard);
-      transition: 0.2s;
+      transition: all 0.2s;
       text-decoration: none;
       display: inline-block;
     }
-    .comic-btn:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--black); }
+
+    .comic-btn:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes floatReverse {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(20px) rotate(-5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* === FLOATING DECORATIONS === */
+    .decor {
+      position: absolute;
+      font-size: 3rem;
+      z-index: 0;
+      filter: drop-shadow(4px 4px 0px var(--black));
+    }
+    .decor-1 { top: 20%; left: 10%; animation: float 4s infinite; }
+    .decor-2 { top: 30%; right: 15%; animation: floatReverse 5s infinite; font-size: 4rem; }
+    .decor-3 { bottom: 20%; left: 20%; animation: float 6s infinite; }
+    .decor-4 { top: 60%; right: 10%; animation: floatReverse 4.5s infinite; }
 
     /* === NAVIGATION === */
     nav {
@@ -87,359 +107,668 @@
       transform: translateX(-50%);
       background: var(--white);
       border: var(--border-thick);
-      border-radius: 50px;
-      padding: 10px 30px;
+      border-radius: var(--radius-pill);
+      padding: 10px 20px;
       display: flex;
-      gap: 30px;
+      justify-content: space-between;
       align-items: center;
       box-shadow: var(--shadow-hard);
       z-index: 1000;
-      width: fit-content;
+      width: 90%;
+      max-width: 800px;
     }
-    nav a { text-decoration: none; color: var(--black); font-weight: 700; transition: 0.2s; }
-    nav a.active { color: var(--red); text-decoration: underline; }
+
+    .nav-left { display: flex; align-items: center; gap: 15px; }
     
-    .nav-icons button { background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      -webkit-text-stroke: 1px var(--black);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+
+    nav ul li a:hover { color: var(--blue); }
+
+    .nav-icons button {
+      background: var(--yellow);
+      border: 3px solid var(--black);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--black);
+      transition: transform 0.2s;
+    }
+    .nav-icons button:hover { transform: scale(1.1); }
 
     /* === HERO SECTION === */
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      background: linear-gradient(var(--yellow), #FFB800);
       position: relative;
+      text-align: center;
+      padding: 120px 20px 50px;
       overflow: hidden;
     }
 
-    .hero h1 {
-      font-family: 'Bangers', cursive;
-      font-size: clamp(3rem, 10vw, 7rem);
-      -webkit-text-stroke: 3px var(--black);
-      color: var(--white);
-      text-shadow: 8px 8px 0 var(--black);
+    .hero-content {
+      position: relative;
       z-index: 10;
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: var(--white);
+      -webkit-text-stroke: 3px var(--black);
+      text-shadow: 6px 6px 0 var(--black);
+      margin-bottom: 20px;
       transform: rotate(-2deg);
     }
 
-    .clouds i {
-      position: absolute;
-      color: rgba(255,255,255,0.8);
-      font-size: 4rem;
-      animation: cloudMove 20s linear infinite;
+    .hero-badge {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      border: var(--border-thick);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      font-size: 1.5rem;
+      font-weight: 700;
+      transform: rotate(3deg);
+      box-shadow: 4px 4px 0 var(--black);
+      margin-bottom: 30px;
     }
 
-    @keyframes cloudMove {
-      from { left: -10%; }
-      to { left: 110%; }
+    .hero-img-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 0 auto 30px;
     }
 
-    /* Waves Animation */
-    .waves {
-      position: absolute;
-      bottom: 0;
+    .hero-img-container img {
       width: 100%;
-      height: 15vh;
-      min-height: 100px;
+      height: 100%;
+      object-fit: cover;
+      border: var(--border-thick);
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: var(--shadow-hard);
+      animation: float 5s infinite;
     }
-    .parallax-waves > use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
-    .parallax-waves > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
-    .parallax-waves > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
-    .parallax-waves > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
-    @keyframes move-forever { 0% { transform: translate3d(-90px,0,0); } 100% { transform: translate3d(85px,0,0); } }
 
-    /* === PROJECTS (WANTED POSTERS) === */
+    /* Comic star burst behind image */
+    .hero-img-container::before {
+      content: '💥';
+      position: absolute;
+      font-size: 5rem;
+      top: -20px;
+      right: -20px;
+      z-index: -1;
+      animation: floatReverse 4s infinite;
+    }
+
+    .scroll-indicator {
+      margin-top: 40px;
+      font-size: 2.5rem;
+      color: var(--black);
+      animation: bounce 2s infinite;
+    }
+
+    /* === SECTIONS === */
+    section { padding: 80px 20px; }
+    .section-container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 10; }
+    
+    .section-title {
+      font-size: 3rem;
+      text-transform: uppercase;
+      color: var(--white);
+      -webkit-text-stroke: 2px var(--black);
+      text-shadow: 4px 4px 0 var(--black);
+      margin-bottom: 40px;
+      display: inline-block;
+      position: relative;
+    }
+
+    /* === ABOUT (SPEECH BUBBLE) === */
+    .about-bubble {
+      position: relative;
+      padding: 40px;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .about-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 50px;
+      border-width: 30px 30px 0 0;
+      border-style: solid;
+      border-color: var(--white) transparent transparent transparent;
+      filter: drop-shadow(4px 4px 0 var(--black));
+    }
+
+    /* === PROJECTS GRID === */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      padding: 40px 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
     }
 
     .project-card {
-      background: var(--parchment);
-      border: 10px solid #5d4037;
-      padding: 20px;
-      text-align: center;
+      padding: 25px;
       position: relative;
-      transition: 0.3s;
-      box-shadow: 10px 10px 0 #3e2723;
-    }
-    .project-card::before {
-      content: "WANTED";
-      font-family: 'Bangers', cursive;
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-    .project-card:hover { transform: scale(1.05) rotate(1deg); }
-
-    .project-stats {
+      background: var(--white);
+      text-align: left;
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 15px;
-      font-weight: 700;
-    }
-
-    /* === CHATBOT UI === */
-    #knave-chat-window {
-      width: 350px;
-      border: var(--border-thick);
-      background: white;
-      border-radius: 20px;
-      box-shadow: var(--shadow-hard);
-      display: none;
       flex-direction: column;
-      position: fixed;
-      bottom: 110px;
-      right: 30px;
-      z-index: 2000;
     }
 
-    .quick-replies {
+    .project-card:hover {
+      transform: translate(-5px, -5px) rotate(-1deg);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .bounty-tag {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: var(--yellow);
+      border: 3px solid var(--black);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--black);
+      transform: rotate(10deg);
+    }
+
+    .project-card h3 {
+      font-size: 1.6rem;
+      color: var(--red);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      -webkit-text-stroke: 1px var(--black);
+    }
+
+    .project-card p {
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #333;
+      flex-grow: 1;
+    }
+
+    .project-meta {
       display: flex;
-      gap: 5px;
-      padding: 10px;
-      overflow-x: auto;
-      background: #f0f0f0;
-    }
-    .quick-btn {
-      background: var(--blue);
-      color: white;
-      border: 2px solid var(--black);
-      padding: 5px 10px;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      cursor: pointer;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 3px dashed var(--black);
+      padding-top: 15px;
     }
 
-    /* MOBILE ADJUSTMENTS */
-    @media (max-width: 600px) {
-      nav { width: 90%; gap: 15px; font-size: 0.8rem; }
-      #knave-chat-window { width: calc(100% - 40px); right: 20px; }
+    /* === CONTACT FORM === */
+    .contact-form {
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .input-group { margin-bottom: 20px; text-align: left; }
+    
+    .input-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .input-group input, .input-group textarea {
+      width: 100%;
+      padding: 15px;
+      border: 4px solid var(--black);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: #fff9e6;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .input-group input:focus, .input-group textarea:focus {
+      background: var(--white);
+      box-shadow: inset 4px 4px 0 rgba(0,0,0,0.1);
+    }
+
+    /* === FLOATING CHATBOT (COMIC STYLE) === */
+    #knave-chat-wrapper {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    #knave-chat-toggle {
+      width: 70px;
+      height: 70px;
+      background: var(--blue);
+      border: var(--border-thick);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 32px;
+      cursor: pointer;
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+    }
+
+    #knave-chat-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    #knave-chat-window {
+      width: 340px;
+      height: 480px;
+      background: var(--white);
+      border: var(--border-thick);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-hover);
+      display: none; 
+      flex-direction: column;
+      margin-bottom: 20px;
+      position: relative;
+      transform-origin: bottom right;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Chat window tail */
+    #knave-chat-window::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      right: 25px;
+      border-width: 15px 15px 0 0;
+      border-style: solid;
+      border-color: var(--black) transparent transparent transparent;
+    }
+    #knave-chat-window::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 28px;
+      border-width: 12px 12px 0 0;
+      border-style: solid;
+      border-color: var(--white) transparent transparent transparent;
+      z-index: 1;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #knave-chat-header {
+      background: var(--yellow);
+      border-bottom: var(--border-thick);
+      padding: 15px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 15px 15px 0 0;
+    }
+
+    #knave-chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #fff9e6;
+    }
+
+    .knave-msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      border: 3px solid var(--black);
+      border-radius: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      animation: popIn 0.2s ease;
+      position: relative;
+    }
+
+    .knave-msg.user {
+      align-self: flex-end;
+      background: var(--blue);
+      color: var(--white);
+      border-bottom-right-radius: 2px;
+    }
+
+    .knave-msg.bot {
+      align-self: flex-start;
+      background: var(--white);
+      color: var(--black);
+      border-bottom-left-radius: 2px;
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    #knave-chat-input-area {
+      padding: 15px;
+      background: var(--white);
+      border-top: var(--border-thick);
+      display: flex;
+      gap: 10px;
+      border-radius: 0 0 15px 15px;
+    }
+
+    #knave-chat-input {
+      flex: 1;
+      border: 3px solid var(--black);
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    #knave-chat-input:focus { background: #fff9e6; }
+
+    #knave-send-btn {
+      background: var(--red);
+      color: var(--white);
+      border: 3px solid var(--black);
+      width: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 2px 2px 0 var(--black);
+    }
+    #knave-send-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      padding: 5px;
+    }
+    .typing-dots span {
+      width: 8px;
+      height: 8px;
+      background: var(--black);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+    
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hero h1 { font-size: 3.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div id="loading-screen">
-    <div class="skull-loader"><i class="fas fa-skull-crossbones"></i></div>
-    <h2 style="font-family:'Bangers'; margin-top: 20px;">Readying the Ship...</h2>
-  </div>
+  <div class="decor decor-1">🍖</div>
+  <div class="decor decor-2">⚓</div>
+  <div class="decor decor-3">💰</div>
+  <div class="decor decor-4">⭐</div>
 
-  <nav id="main-nav">
-    <a href="#hero" class="active">Home</a>
-    <a href="#about">Lore</a>
-    <a href="#projects">Bounties</a>
-    <a href="#contact">Contact</a>
-    <div class="nav-icons">
-      <button onclick="toggleAudio()"><i id="audio-icon" class="fas fa-volume-up"></i></button>
+  <nav>
+    <div class="nav-left">
+      <div class="logo">Knave</div>
+      <div class="nav-icons">
+        <button id="soundToggle" aria-label="Toggle Sound"><i class="fas fa-volume-up"></i></button>
+      </div>
     </div>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">Lore</a></li>
+      <li><a href="#projects">Bounties</a></li>
+      <li><a href="#contact">Snail Mail</a></li>
+    </ul>
   </nav>
 
   <section id="hero" class="hero">
-    <div class="clouds">
-      <i class="fas fa-cloud" style="top: 15%; animation-duration: 25s;"></i>
-      <i class="fas fa-cloud" style="top: 30%; animation-duration: 35s; opacity: 0.5;"></i>
-    </div>
+    <div class="hero-content">
+      <div class="hero-badge">THE PIRATE CODER</div>
+      <h1>Bigger Than The Grand Line.<br>Bolder Than A Yonko.</h1>
+      
+      <div class="hero-img-container">
+        <img src="https://static.beebom.com/wp-content/uploads/2025/01/Luffys-Hito-Hito-no-Mi-Model-Nika.jpg?w=1024" alt="Luffy Gear 5">
+      </div>
 
-    <h1>KING OF THE CODE.</h1>
-    <div class="reveal" style="z-index: 10;">
-      <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;">Frontend Developer | Pirate | Dreamer</p>
-      <a href="#projects" class="comic-btn">View Bounties <i class="fas fa-compass"></i></a>
+      <a href="#projects" class="comic-btn">View My Bounties <i class="fas fa-skull-crossbones"></i></a>
     </div>
-
-    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-      <defs>
-        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-      </defs>
-      <g class="parallax-waves">
-        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-      </g>
-    </svg>
+    <div class="scroll-indicator"><i class="fas fa-arrow-down"></i></div>
   </section>
 
-  <section id="about" style="padding: 100px 20px; background: white; text-align: center;">
-    <div class="reveal">
-      <h2 style="font-family:'Bangers'; font-size: 4rem;">Captain's Log</h2>
-      <div style="max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8;">
-        Ahoy! I'm a developer who builds digital treasures. I specialize in turning complex ideas into 
-        vibrant, high-performance interfaces. My tech stack is my crew, and we're ready to sail 
-        the vast oceans of the internet!
+  <section id="about">
+    <div class="section-container text-center">
+      <h2 class="section-title">Character Lore</h2>
+      <div class="comic-box about-bubble">
+        "Yo ho ho! Setting sail on the digital seas! I am a passionate developer with an eye for loud designs and a love for creating seamless, interactive experiences. Just like gathering a pirate crew, I love assembling the right tech stack (HTML, CSS, JS, React) to bring ideas to life. Let's conquer the New World of web development together!"
       </div>
     </div>
   </section>
 
-  <section id="projects" style="padding: 80px 0;">
-    <h2 style="text-align: center; font-family:'Bangers'; font-size: 4rem;">Most Wanted Repos</h2>
-    <div class="projects-grid" id="github-projects">
+  <section id="projects">
+    <div class="section-container text-center">
+      <h2 class="section-title">Wanted Posters</h2>
+      <div class="projects-grid" id="projectsGrid">
+        <h3 style="grid-column: 1/-1;">Locating treasures... 🧭</h3>
       </div>
+    </div>
   </section>
 
-  <section id="contact" style="padding: 100px 20px; background: var(--black); color: white; text-align: center;">
-    <div class="reveal">
-      <h2 style="font-family:'Bangers'; font-size: 3rem; color: var(--yellow);">Send a Den Den Mushi</h2>
-      <form id="contact-form" style="max-width: 500px; margin: 40px auto; display: flex; flex-direction: column; gap: 20px;">
-        <input type="text" placeholder="Your Pirate Name" required style="padding:15px; border-radius:10px; border:none;">
-        <input type="email" placeholder="Your Vivre Card (Email)" required style="padding:15px; border-radius:10px; border:none;">
-        <textarea placeholder="Your Message" rows="5" style="padding:15px; border-radius:10px; border:none;"></textarea>
-        <button type="submit" class="comic-btn">Fire the Cannons!</button>
+  <section id="contact">
+    <div class="section-container text-center">
+      <h2 class="section-title">Send a Den Den Mushi</h2>
+      <form class="comic-box contact-form" id="contactForm">
+        <div class="input-group">
+          <label>Pirate Name</label>
+          <input type="text" name="name" placeholder="Monkey D. Luffy" required>
+        </div>
+        <div class="input-group">
+          <label>Vivre Card (Email)</label>
+          <input type="email" name="email" placeholder="luffy@strawhats.com" required>
+        </div>
+        <div class="input-group">
+          <label>Message</label>
+          <textarea name="message" rows="4" placeholder="Join my crew!" required></textarea>
+        </div>
+        <button type="submit" class="comic-btn" style="width: 100%;">Fire the Cannons! 💣</button>
       </form>
     </div>
   </section>
 
-  <div id="knave-chat-window">
-    <div style="background: var(--yellow); padding: 15px; font-weight: 700; border-bottom: var(--border-thick); border-radius: 15px 15px 0 0; display:flex; justify-content: space-between;">
-      <span>⚓ Navigator Nami</span>
-      <button onclick="toggleChat()" style="background:none; border:none; cursor:pointer;">×</button>
+  <div id="knave-chat-wrapper">
+    <div id="knave-chat-window">
+      <div id="knave-chat-header">
+        <span><i class="fas fa-compass"></i> Navigator Nami-Bot</span>
+        <span style="cursor:pointer; font-size: 1.5rem;" onclick="toggleKnaveChat()">×</span>
+      </div>
+      <div id="knave-chat-messages"></div>
+      <div id="knave-chat-input-area">
+        <input type="text" id="knave-chat-input" placeholder="Ask for directions..." />
+        <button id="knave-send-btn"><i class="fas fa-paper-plane"></i></button>
+      </div>
     </div>
-    <div id="chat-content" style="height: 300px; overflow-y: auto; padding: 15px; background: #fff9e6; display: flex; flex-direction: column; gap: 10px;"></div>
-    <div class="quick-replies">
-      <button class="quick-btn" onclick="sendQuick('Tell me a joke')">Tell a Joke 🍖</button>
-      <button class="quick-btn" onclick="sendQuick('Hire the Captain')">Hire Me 💰</button>
-    </div>
-    <div style="padding: 10px; border-top: 3px solid #ddd; display: flex;">
-      <input type="text" id="chat-input" placeholder="Speak to the navigator..." style="flex:1; padding: 8px; border-radius: 20px; border: 2px solid #000;">
-      <button onclick="handleChat()" style="margin-left:5px; background: var(--red); color:white; border:2px solid #000; border-radius:50%; width:35px;">></button>
-    </div>
+    <div id="knave-chat-toggle" onclick="toggleKnaveChat()"><i class="fas fa-comment-dots"></i></div>
   </div>
-
-  <div id="chat-toggle" onclick="toggleChat()" style="position:fixed; bottom:30px; right:30px; background:var(--blue); color:white; width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; border:var(--border-thick); box-shadow:var(--shadow-hard); z-index:2001;">
-    <i class="fas fa-comment"></i>
-  </div>
-
-  <audio id="bg-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
 
   <script>
-    /* === CORE MODULES === */
-
-    // 1. Loading & Initialization
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('loading-screen');
-      setTimeout(() => {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
-      }, 1500);
-      initReveal();
-      fetchBounties();
+    // --- Fake Sound Toggle ---
+    const soundBtn = document.getElementById('soundToggle');
+    let soundOn = true;
+    soundBtn.addEventListener('click', () => {
+      soundOn = !soundOn;
+      soundBtn.innerHTML = soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
     });
 
-    // 2. Scroll Reveal Logic
-    function initReveal() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            updateNav(entry.target.id);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      document.querySelectorAll('section').forEach(section => observer.observe(section));
-    }
-
-    function updateNav(id) {
-      document.querySelectorAll('nav a').forEach(a => {
-        a.classList.remove('active');
-        if (a.getAttribute('href') === `#${id}`) a.classList.add('active');
-      });
-    }
-
-    // 3. GitHub Bounty Fetcher
-    async function fetchBounties() {
-      const grid = document.getElementById('github-projects');
+    // --- FETCH GITHUB REPOS (BOUNTIES) ---
+    async function fetchRepos() {
+      const projectsGrid = document.getElementById('projectsGrid');
       try {
         const response = await fetch('https://api.github.com/users/keisazen-creator/repos?sort=updated');
         const repos = await response.json();
-        grid.innerHTML = repos.slice(0, 6).map(repo => `
-          <div class="project-card reveal">
-            <h3 style="font-family:'Bangers'; font-size:1.8rem;">${repo.name}</h3>
-            <p style="font-weight:600; min-height:50px;">${repo.description || 'A treasure worth fighting for.'}</p>
-            <div class="project-stats">
-              <span><i class="fas fa-star" style="color:var(--yellow)"></i> ${repo.stargazers_count}</span>
-              <span><i class="fas fa-code-branch" style="color:var(--blue)"></i> ${repo.forks_count}</span>
+        projectsGrid.innerHTML = ''; 
+        
+        repos.slice(0, 6).forEach(repo => {
+          const card = document.createElement('div');
+          card.className = 'comic-box project-card';
+          
+          // Generate a random high bounty number for fun
+          const bounty = Math.floor(Math.random() * 900) + 100;
+
+          card.innerHTML = `
+            <div class="bounty-tag"><i class="fas fa-coins"></i> ${bounty},000,000</div>
+            <h3>${repo.name}</h3>
+            <p>${repo.description || 'A mysterious treasure left by Joy Boy.'}</p>
+            <div class="project-meta">
+              <span style="font-weight: 700; color: var(--blue);"><i class="fas fa-code"></i> ${repo.language || 'Unknown'}</span>
+              <a href="${repo.html_url}" target="_blank" class="comic-btn" style="padding: 8px 16px; font-size: 0.9rem;">Plunder Code</a>
             </div>
-            <p style="font-size:0.8rem; margin: 10px 0;">Updated: ${new Date(repo.updated_at).toLocaleDateString()}</p>
-            <a href="${repo.html_url}" target="_blank" class="comic-btn" style="font-size:1rem; padding:5px 15px;">Plunder</a>
-          </div>
-        `).join('');
-      } catch (e) {
-        grid.innerHTML = "<h3>The Marines blocked the signal! (API Error)</h3>";
+          `;
+          projectsGrid.appendChild(card);
+        });
+      } catch (error) {
+        projectsGrid.innerHTML = '<h3>Failed to load bounties. The World Government blocked us!</h3>';
       }
     }
+    fetchRepos();
 
-    // 4. Chatbot Personality
-    function toggleChat() {
-      const win = document.getElementById('knave-chat-window');
-      win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-      if(win.style.display === 'flex' && document.getElementById('chat-content').children.length === 0) {
-        addChatMsg("bot", "Ahoy! I'm Nami, the Navigator. Where should we set sail?");
-      }
-    }
-
-    function addChatMsg(type, text) {
-      const content = document.getElementById('chat-content');
-      const msg = document.createElement('div');
-      msg.style.padding = "10px";
-      msg.style.borderRadius = "10px";
-      msg.style.maxWidth = "80%";
-      msg.style.fontWeight = "600";
-      msg.style.background = type === 'bot' ? 'white' : 'var(--blue)';
-      msg.style.color = type === 'bot' ? 'black' : 'white';
-      msg.style.alignSelf = type === 'bot' ? 'flex-start' : 'flex-end';
-      msg.style.border = "2px solid black";
-      msg.innerText = text;
-      content.appendChild(msg);
-      content.scrollTop = content.scrollHeight;
-    }
-
-    function sendQuick(text) {
-      addChatMsg('user', text);
-      setTimeout(() => {
-        const response = text.includes('Hire') 
-          ? "Wise choice! Send a Den Den Mushi (contact form) and let's conquer the Grand Line!" 
-          : "Why did the pirate cross the road? To get to the 'Second' mate! Yo ho ho!";
-        addChatMsg('bot', response);
-      }, 800);
-    }
-
-    // 5. Audio Toggle
-    let isPlaying = false;
-    function toggleAudio() {
-      const audio = document.getElementById('bg-music');
-      const icon = document.getElementById('audio-icon');
-      if (isPlaying) {
-        audio.pause();
-        icon.className = 'fas fa-volume-mute';
-      } else {
-        audio.play().catch(() => alert("Interact with the page first to play music!"));
-        icon.className = 'fas fa-volume-up';
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // 6. Contact Feedback
-    document.getElementById('contact-form').onsubmit = (e) => {
+    // --- CONTACT FORM ---
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.innerText = "SUCCESS! 💥";
-      btn.style.background = "#4CAF50";
-      e.target.reset();
+      const btn = this.querySelector('button');
+      btn.innerHTML = 'Sent via News Coo! 🕊️';
       setTimeout(() => {
-        btn.innerText = "Fire the Cannons!";
-        btn.style.background = "var(--red)";
+        btn.innerHTML = 'Fire the Cannons! 💣';
+        this.reset();
       }, 3000);
-    };
+    });
+
+    // --- CHATBOT LOGIC ---
+    (function() {
+      const OPENAI_API_KEY = ""; // 🔑 Put your key here
+      const OWNER_NAME = "Knave";
+      const chatWindow = document.getElementById("knave-chat-window");
+      const chatMessages = document.getElementById("knave-chat-messages");
+      const chatInput = document.getElementById("knave-chat-input");
+      const sendBtn = document.getElementById("knave-send-btn");
+
+      window.toggleKnaveChat = function() {
+        const isVisible = chatWindow.style.display === "flex";
+        chatWindow.style.display = isVisible ? "none" : "flex";
+        if (!isVisible && chatMessages.children.length === 0) {
+          addMessage("Ahoy! I'm the crew's Navigator. Need help reading the Log Pose?", "bot");
+        }
+      };
+
+      function addMessage(text, side) {
+        const typingEl = document.querySelector('.knave-msg.bot.typing');
+        if (typingEl) typingEl.remove();
+        
+        const div = document.createElement("div");
+        div.className = `knave-msg ${side}`;
+        div.innerText = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function showTyping() {
+        const div = document.createElement("div");
+        div.className = "knave-msg bot typing";
+        div.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div>`;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      async function fetchWikipedia(query) {
+        try {
+          const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
+          const data = await res.json();
+          return data.extract ? `My maps show this: ${data.extract}` : null;
+        } catch (e) { return null; }
+      }
+
+      async function fetchOpenAI(query) {
+        if (!OPENAI_API_KEY) return null;
+        try {
+          const res = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${OPENAI_API_KEY}` },
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              messages: [
+                { role: "system", content: `You are a pirate navigator for ${OWNER_NAME}'s crew. Keep responses under 3 sentences. One piece theme.` },
+                { role: "user", content: query }
+              ]
+            })
+          });
+          const data = await res.json();
+          return data.choices[0].message.content;
+        } catch (e) { return null; }
+      }
+
+      async function getBotResponse(userText) {
+        let response = await fetchOpenAI(userText);
+        if (response) return response;
+        response = await fetchWikipedia(userText);
+        if (response) return response;
+        return "Shiver me timbers! That's a mystery even for the Grand Line!";
+      }
+
+      async function handleSend() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        addMessage(text, "user");
+        chatInput.value = "";
+        showTyping();
+        setTimeout(async () => {
+          const botResponse = await getBotResponse(text);
+          addMessage(botResponse, "bot");
+        }, 1200);
+      }
+
+      sendBtn.onclick = handleSend;
+      chatInput.onkeypress = (e) => { if (e.key === 'Enter') handleSend(); };
+    })();
   </script>
 </body>
 </html>
