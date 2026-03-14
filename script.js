@@ -1,40 +1,47 @@
-// -----------------------------
+// =============================
 // SOUND TOGGLE WITH MUSIC
-// -----------------------------
+// =============================
+
 const soundBtn = document.getElementById("soundToggle");
 
-// create audio object
+// load music from repo
 const bgMusic = new Audio("onepiece.webm");
 bgMusic.loop = true;
+bgMusic.volume = 0.6;
 
 let soundOn = false;
 
+// default icon
+soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+
 soundBtn.addEventListener("click", () => {
 
-  if (soundOn) {
+  if (!soundOn) {
 
-    bgMusic.pause();
-
-    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-
-    soundOn = false;
+    bgMusic.play()
+      .then(() => {
+        soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        soundOn = true;
+      })
+      .catch(() => {
+        console.log("Audio blocked until user interaction.");
+      });
 
   } else {
 
-    bgMusic.play();
-
-    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-
-    soundOn = true;
+    bgMusic.pause();
+    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    soundOn = false;
 
   }
 
 });
 
 
-// -----------------------------
+// =============================
 // FETCH GITHUB PROJECTS
-// -----------------------------
+// =============================
+
 async function fetchRepos() {
 
   const projectsGrid = document.getElementById("projectsGrid");
@@ -52,7 +59,6 @@ async function fetchRepos() {
     repos.slice(0, 6).forEach((repo) => {
 
       const card = document.createElement("div");
-
       card.className = "comic-box project-card";
 
       const bounty = Math.floor(Math.random() * 900) + 100;
@@ -98,33 +104,34 @@ async function fetchRepos() {
 fetchRepos();
 
 
-// -----------------------------
+// =============================
 // CONTACT FORM
-// -----------------------------
-document
-  .getElementById("contactForm")
-  .addEventListener("submit", function (e) {
+// =============================
 
-    e.preventDefault();
+const contactForm = document.getElementById("contactForm");
 
-    const btn = this.querySelector("button");
+contactForm.addEventListener("submit", function (e) {
 
-    btn.innerHTML = "Message Sent";
+  e.preventDefault();
 
-    setTimeout(() => {
+  const btn = this.querySelector("button");
 
-      btn.innerHTML = "Send Message";
+  btn.innerHTML = "Message Sent";
 
-      this.reset();
+  setTimeout(() => {
 
-    }, 3000);
+    btn.innerHTML = "Send Message";
+    this.reset();
 
-  });
+  }, 3000);
+
+});
 
 
-// -----------------------------
+// =============================
 // CHATBOT
-// -----------------------------
+// =============================
+
 (function () {
 
   const OPENAI_API_KEY = "";
@@ -160,11 +167,9 @@ document
     const div = document.createElement("div");
 
     div.className = `knave-msg ${side}`;
-
     div.innerText = text;
 
     chatMessages.appendChild(div);
-
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
   }
@@ -185,7 +190,6 @@ document
     `;
 
     chatMessages.appendChild(div);
-
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
   }
@@ -275,11 +279,9 @@ document
   async function handleSend() {
 
     const text = chatInput.value.trim();
-
     if (!text) return;
 
     addMessage(text, "user");
-
     chatInput.value = "";
 
     showTyping();
@@ -287,7 +289,6 @@ document
     setTimeout(async () => {
 
       const botResponse = await getBotResponse(text);
-
       addMessage(botResponse, "bot");
 
     }, 1200);
@@ -298,9 +299,7 @@ document
   sendBtn.onclick = handleSend;
 
   chatInput.onkeypress = (e) => {
-
     if (e.key === "Enter") handleSend();
-
   };
 
 })();
