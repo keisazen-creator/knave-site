@@ -1,15 +1,34 @@
 // -----------------------------
-// SOUND TOGGLE
+// SOUND TOGGLE WITH MUSIC
 // -----------------------------
 const soundBtn = document.getElementById("soundToggle");
-let soundOn = true;
+
+// create audio object
+const bgMusic = new Audio("onepiece.webm");
+bgMusic.loop = true;
+
+let soundOn = false;
 
 soundBtn.addEventListener("click", () => {
-  soundOn = !soundOn;
 
-  soundBtn.innerHTML = soundOn
-    ? '<i class="fas fa-volume-up"></i>'
-    : '<i class="fas fa-volume-mute"></i>';
+  if (soundOn) {
+
+    bgMusic.pause();
+
+    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+
+    soundOn = false;
+
+  } else {
+
+    bgMusic.play();
+
+    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+
+    soundOn = true;
+
+  }
+
 });
 
 
@@ -33,6 +52,7 @@ async function fetchRepos() {
     repos.slice(0, 6).forEach((repo) => {
 
       const card = document.createElement("div");
+
       card.className = "comic-box project-card";
 
       const bounty = Math.floor(Math.random() * 900) + 100;
@@ -63,6 +83,7 @@ async function fetchRepos() {
       `;
 
       projectsGrid.appendChild(card);
+
     });
 
   } catch (error) {
@@ -91,8 +112,11 @@ document
     btn.innerHTML = "Message Sent";
 
     setTimeout(() => {
+
       btn.innerHTML = "Send Message";
+
       this.reset();
+
     }, 3000);
 
   });
@@ -119,7 +143,9 @@ document
     chatWindow.style.display = isVisible ? "none" : "flex";
 
     if (!isVisible && chatMessages.children.length === 0) {
+
       addMessage("Hello! I'm the site assistant. How can I help?", "bot");
+
     }
 
   };
@@ -128,11 +154,13 @@ document
   function addMessage(text, side) {
 
     const typingEl = document.querySelector(".knave-msg.bot.typing");
+
     if (typingEl) typingEl.remove();
 
     const div = document.createElement("div");
 
     div.className = `knave-msg ${side}`;
+
     div.innerText = text;
 
     chatMessages.appendChild(div);
@@ -168,9 +196,7 @@ document
     try {
 
       const res = await fetch(
-        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(
-          query
-        )}`
+        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`
       );
 
       const data = await res.json();
@@ -234,9 +260,11 @@ document
   async function getBotResponse(userText) {
 
     let response = await fetchOpenAI(userText);
+
     if (response) return response;
 
     response = await fetchWikipedia(userText);
+
     if (response) return response;
 
     return "Sorry, I couldn't find an answer.";
@@ -247,6 +275,7 @@ document
   async function handleSend() {
 
     const text = chatInput.value.trim();
+
     if (!text) return;
 
     addMessage(text, "user");
@@ -256,8 +285,11 @@ document
     showTyping();
 
     setTimeout(async () => {
+
       const botResponse = await getBotResponse(text);
+
       addMessage(botResponse, "bot");
+
     }, 1200);
 
   }
@@ -266,7 +298,9 @@ document
   sendBtn.onclick = handleSend;
 
   chatInput.onkeypress = (e) => {
+
     if (e.key === "Enter") handleSend();
+
   };
 
 })();
