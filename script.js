@@ -24,7 +24,7 @@ async function fetchRepos() {
       card.innerHTML = `
         <div class="bounty-tag"><i class="fas fa-coins"></i> ${bounty},000,000</div>
         <h3>${repo.name}</h3>
-        <p>${repo.description || 'A mysterious treasure left by Joy Boy.'}</p>
+        <p>${repo.description || 'Description'}</p>
         <div class="project-meta">
           <span style="font-weight: 700; color: var(--blue);"><i class="fas fa-code"></i> ${repo.language || 'Unknown'}</span>
           <a href="${repo.html_url}" target="_blank" class="comic-btn" style="padding: 8px 16px; font-size: 0.9rem;">Plunder Code</a>
