@@ -1,104 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Knave - Pirate Developer Portfolio">
-  <title>Knave | The Pirate Coder</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Knave Developer Portfolio">
+
+<title>Knave | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="decor decor-1">🍖</div>
-  <div class="decor decor-2">⚓</div>
-  <div class="decor decor-3">💰</div>
-  <div class="decor decor-4">⭐</div>
+<div class="decor decor-1">🍖</div>
+<div class="decor decor-2">⚓</div>
+<div class="decor decor-3">💰</div>
+<div class="decor decor-4">⭐</div>
 
-  <nav>
-    <div class="nav-left">
-      <div class="logo">Knave</div>
-      <div class="nav-icons">
-        <button id="soundToggle" aria-label="Toggle Sound"><i class="fas fa-volume-up"></i></button>
-      </div>
-    </div>
-    <ul>
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#about">Lore</a></li>
-      <li><a href="#projects">Bounties</a></li>
-      <li><a href="#contact">Snail Mail</a></li>
-    </ul>
-  </nav>
+<nav>
+<div class="nav-left">
+<div class="logo">Knave</div>
 
-  <section id="hero" class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">THE PIRATE CODER</div>
-      <h1>Bigger Than The Grand Line.<br>Bolder Than A Yonko.</h1>
-      
-      <div class="hero-img-container">
-        <img src="https://static.beebom.com/wp-content/uploads/2025/01/Luffys-Hito-Hito-no-Mi-Model-Nika.jpg?w=1024" alt="Luffy Gear 5">
-      </div>
+<div class="nav-icons">
+<button id="soundToggle">
+<i class="fas fa-volume-up"></i>
+</button>
+</div>
+</div>
 
-      <a href="#projects" class="comic-btn">View My Bounties <i class="fas fa-skull-crossbones"></i></a>
-    </div>
-    <div class="scroll-indicator"><i class="fas fa-arrow-down"></i></div>
-  </section>
+<ul>
+<li><a href="#hero">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
 
-  <section id="about">
-    <div class="section-container text-center">
-      <h2 class="section-title">Character Lore</h2>
-      <div class="comic-box about-bubble">
-        "Yo ho ho! Setting sail on the digital seas! I am a passionate developer with an eye for loud designs and a love for creating seamless, interactive experiences. Just like gathering a pirate crew, I love assembling the right tech stack (HTML, CSS, JS, React) to bring ideas to life. Let's conquer the New World of web development together!"
-      </div>
-    </div>
-  </section>
 
-  <section id="projects">
-    <div class="section-container text-center">
-      <h2 class="section-title">Wanted Posters</h2>
-      <div class="projects-grid" id="projectsGrid">
-        <h3 style="grid-column: 1/-1;">Locating treasures... 🧭</h3>
-      </div>
-    </div>
-  </section>
+<section id="hero" class="hero">
 
-  <section id="contact">
-    <div class="section-container text-center">
-      <h2 class="section-title">Send a Den Den Mushi</h2>
-      <form class="comic-box contact-form" id="contactForm">
-        <div class="input-group">
-          <label>Pirate Name</label>
-          <input type="text" name="name" placeholder="Monkey D. Luffy" required>
-        </div>
-        <div class="input-group">
-          <label>Vivre Card (Email)</label>
-          <input type="email" name="email" placeholder="luffy@strawhats.com" required>
-        </div>
-        <div class="input-group">
-          <label>Message</label>
-          <textarea name="message" rows="4" placeholder="Join my crew!" required></textarea>
-        </div>
-        <button type="submit" class="comic-btn" style="width: 100%;">Fire the Cannons! 💣</button>
-      </form>
-    </div>
-  </section>
+<div class="hero-content">
 
-  <div id="knave-chat-wrapper">
-    <div id="knave-chat-window">
-      <div id="knave-chat-header">
-        <span><i class="fas fa-compass"></i> Navigator Nami-Bot</span>
-        <span style="cursor:pointer; font-size: 1.5rem;" onclick="toggleKnaveChat()">×</span>
-      </div>
-      <div id="knave-chat-messages"></div>
-      <div id="knave-chat-input-area">
-        <input type="text" id="knave-chat-input" placeholder="Ask for directions..." />
-        <button id="knave-send-btn"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-    <div id="knave-chat-toggle" onclick="toggleKnaveChat()"><i class="fas fa-comment-dots"></i></div>
-  </div>
+<div class="hero-badge">
+KNAVE
+</div>
 
-  <script src="script.js"></script>
+<h1>
+I'm Gonna Be The King Of The Pirates!
+</h1>
+
+<div class="hero-img-container">
+<img src="https://static.beebom.com/wp-content/uploads/2025/01/Luffys-Hito-Hito-no-Mi-Model-Nika.jpg?w=1024">
+</div>
+
+<a href="#projects" class="comic-btn">
+View My Projects
+</a>
+
+</div>
+
+<div class="scroll-indicator">
+<i class="fas fa-arrow-down"></i>
+</div>
+
+</section>
+
+
+
+<section id="about">
+
+<div class="section-container text-center">
+
+<h2 class="section-title">
+Character Lore
+</h2>
+
+<div class="comic-box about-bubble">
+
+Yo ho ho !!
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="projects">
+
+<div class="section-container text-center">
+
+<h2 class="section-title">
+Projects
+</h2>
+
+<div class="projects-grid" id="projectsGrid">
+
+<h3 style="grid-column:1/-1;">
+Loading projects...
+</h3>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="contact">
+
+<div class="section-container text-center">
+
+<h2 class="section-title">
+Contact
+</h2>
+
+<form class="comic-box contact-form" id="contactForm">
+
+<div class="input-group">
+<label>Name</label>
+<input type="text" name="name" placeholder="Your Name" required>
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" name="email" placeholder="your@email.com" required>
+</div>
+
+<div class="input-group">
+<label>Message</label>
+<textarea name="message" rows="4" placeholder="Write your message here..." required></textarea>
+</div>
+
+<button type="submit" class="comic-btn" style="width:100%;">
+Send Message
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+
+
+<div id="knave-chat-wrapper">
+
+<div id="knave-chat-window">
+
+<div id="knave-chat-header">
+
+<span>
+<i class="fas fa-robot"></i>
+Knave Assistant
+</span>
+
+<span onclick="toggleKnaveChat()" style="cursor:pointer;font-size:1.5rem;">
+×
+</span>
+
+</div>
+
+<div id="knave-chat-messages"></div>
+
+<div id="knave-chat-input-area">
+
+<input type="text" id="knave-chat-input" placeholder="Ask something...">
+
+<button id="knave-send-btn">
+<i class="fas fa-paper-plane"></i>
+</button>
+
+</div>
+
+</div>
+
+
+<div id="knave-chat-toggle" onclick="toggleKnaveChat()">
+<i class="fas fa-comment-dots"></i>
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
 </body>
 </html>
