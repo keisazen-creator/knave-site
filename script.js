@@ -1,88 +1,306 @@
-// Mock Data to simulate Consumet / AniList API response
-const mockAnimeData = [
-    {
-        id: "jujutsu-kaisen",
-        title: "Jujutsu Kaisen",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx113415-bbBWj4pEFseh.jpg",
-        rating: "9.8"
-    },
-    {
-        id: "frieren",
-        title: "Frieren: Beyond Journey's End",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx154587-n142B4X2ZtqO.jpg",
-        rating: "9.9"
-    },
-    {
-        id: "one-piece",
-        title: "One Piece",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-YCDignzjclQl.jpg",
-        rating: "9.5"
-    },
-    {
-        id: "demon-slayer",
-        title: "Demon Slayer",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-PEn1CTc93DQl.jpg",
-        rating: "9.6"
-    },
-    {
-        id: "attack-on-titan",
-        title: "Attack on Titan",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx104578-laZZFvvXEphe.jpg",
-        rating: "9.8"
-    },
-    {
-        id: "chainsaw-man",
-        title: "Chainsaw Man",
-        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-NuFVXwOQuA2x.jpg",
-        rating: "9.4"
-    }
-];
 
-// Function to generate Anime Cards dynamically
-function populateTrendingCarousel() {
-    const carousel = document.getElementById('trending-carousel');
-    
-    mockAnimeData.forEach(anime => {
-        const card = document.createElement('div');
-        card.className = 'anime-card';
-        card.innerHTML = `
-            <img src="${anime.image}" alt="${anime.title}">
-            <div class="card-overlay">
-                <h4>${anime.title}</h4>
-                <div style="display:flex; justify-content:space-between; margin-top: 5px;">
-                    <span style="color: gold;"><i class="fas fa-star"></i> ${anime.rating}</span>
-                    <i class="fas fa-play-circle" style="color: var(--accent); font-size: 1.2rem;"></i>
-                </div>
-            </div>
-        `;
-        
-        // Simulating Next.js router push
-        card.addEventListener('click', () => {
-            console.log(`Navigating to /anime/${anime.id}`);
-            alert(`In the React app, this would route to /anime/${anime.id}`);
-        });
+// =============================
+// SOUND TOGGLE WITH MUSIC
+// =============================
 
-        carousel.appendChild(card);
+const soundBtn = document.getElementById("soundToggle");
+
+// load music from repo
+const bgMusic = new Audio("onepiece.webm");
+bgMusic.loop = true;
+bgMusic.volume = 0.6;
+
+let soundOn = false;
+
+// default icon
+soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+
+soundBtn.addEventListener("click", () => {
+
+  if (!soundOn) {
+
+    bgMusic.play()
+      .then(() => {
+        soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        soundOn = true;
+      })
+      .catch(() => {
+        console.log("Audio blocked until user interaction.");
+      });
+
+  } else {
+
+    bgMusic.pause();
+    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+    soundOn = false;
+
+  }
+
+});
+
+
+// =============================
+// FETCH GITHUB PROJECTS
+// =============================
+
+async function fetchRepos() {
+
+  const projectsGrid = document.getElementById("projectsGrid");
+
+  try {
+
+    const response = await fetch(
+      "https://api.github.com/users/keisazen-creator/repos?sort=updated"
+    );
+
+    const repos = await response.json();
+
+    projectsGrid.innerHTML = "";
+
+    repos.slice(0, 6).forEach((repo) => {
+
+      const card = document.createElement("div");
+      card.className = "comic-box project-card";
+
+      const bounty = Math.floor(Math.random() * 900) + 100;
+
+      card.innerHTML = `
+        <div class="bounty-tag">
+          <i class="fas fa-coins"></i> ${bounty},000,000
+        </div>
+
+        <h3>${repo.name}</h3>
+
+        <p>${repo.description || "No description available"}</p>
+
+        <div class="project-meta">
+
+          <span style="font-weight:700;color:var(--blue);">
+            <i class="fas fa-code"></i> ${repo.language || "Unknown"}
+          </span>
+
+          <a href="${repo.html_url}"
+             target="_blank"
+             class="comic-btn"
+             style="padding:8px 16px;font-size:0.9rem;">
+             View Code
+          </a>
+
+        </div>
+      `;
+
+      projectsGrid.appendChild(card);
+
     });
+
+  } catch (error) {
+
+    projectsGrid.innerHTML =
+      "<h3>Failed to load projects</h3>";
+
+  }
+
 }
 
-// Navbar Scroll Effect (Glassmorphism transition)
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        nav.style.background = 'rgba(11, 11, 15, 0.9)';
-        nav.style.borderBottom = '1px solid var(--glass-border)';
-    } else {
-        nav.style.background = 'var(--glass-bg)';
-        nav.style.borderBottom = '1px solid transparent';
+fetchRepos();
+
+
+// =============================
+// CONTACT FORM
+// =============================
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function (e) {
+
+  e.preventDefault();
+
+  const btn = this.querySelector("button");
+
+  btn.innerHTML = "Message Sent";
+
+  setTimeout(() => {
+
+    btn.innerHTML = "Send Message";
+    this.reset();
+
+  }, 3000);
+
+});
+
+
+// =============================
+// CHATBOT
+// =============================
+
+(function () {
+
+  const OPENAI_API_KEY = "";
+  const OWNER_NAME = "Knave";
+
+  const chatWindow = document.getElementById("knave-chat-window");
+  const chatMessages = document.getElementById("knave-chat-messages");
+  const chatInput = document.getElementById("knave-chat-input");
+  const sendBtn = document.getElementById("knave-send-btn");
+
+
+  window.toggleKnaveChat = function () {
+
+    const isVisible = chatWindow.style.display === "flex";
+
+    chatWindow.style.display = isVisible ? "none" : "flex";
+
+    if (!isVisible && chatMessages.children.length === 0) {
+
+      addMessage("Hello! I'm the site assistant. How can I help?", "bot");
+
     }
-});
 
-// Initialize app
-document.addEventListener('DOMContentLoaded', () => {
-    populateTrendingCarousel();
-});
+  };
 
-// Note on Video Integration: 
-// In the Next.js version, you will pass the .m3u8 streaming link fetched from Consumet 
-// into a Video.js component on the /watch/[episodeId] page.
+
+  function addMessage(text, side) {
+
+    const typingEl = document.querySelector(".knave-msg.bot.typing");
+
+    if (typingEl) typingEl.remove();
+
+    const div = document.createElement("div");
+
+    div.className = `knave-msg ${side}`;
+    div.innerText = text;
+
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  }
+
+
+  function showTyping() {
+
+    const div = document.createElement("div");
+
+    div.className = "knave-msg bot typing";
+
+    div.innerHTML = `
+      <div class="typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    `;
+
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  }
+
+
+  async function fetchWikipedia(query) {
+
+    try {
+
+      const res = await fetch(
+        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`
+      );
+
+      const data = await res.json();
+
+      return data.extract ? data.extract : null;
+
+    } catch {
+
+      return null;
+
+    }
+
+  }
+
+
+  async function fetchOpenAI(query) {
+
+    if (!OPENAI_API_KEY) return null;
+
+    try {
+
+      const res = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+          },
+
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "system",
+                content: `You are an assistant for ${OWNER_NAME}'s portfolio website.`,
+              },
+              {
+                role: "user",
+                content: query,
+              },
+            ],
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      return data.choices[0].message.content;
+
+    } catch {
+
+      return null;
+
+    }
+
+  }
+
+
+  async function getBotResponse(userText) {
+
+    let response = await fetchOpenAI(userText);
+
+    if (response) return response;
+
+    response = await fetchWikipedia(userText);
+
+    if (response) return response;
+
+    return "Sorry, I couldn't find an answer.";
+
+  }
+
+
+  async function handleSend() {
+
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    chatInput.value = "";
+
+    showTyping();
+
+    setTimeout(async () => {
+
+      const botResponse = await getBotResponse(text);
+      addMessage(botResponse, "bot");
+
+    }, 1200);
+
+  }
+
+
+  sendBtn.onclick = handleSend;
+
+  chatInput.onkeypress = (e) => {
+    if (e.key === "Enter") handleSend();
+  };
+
+})();
