@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtakuCloud | Anime Streaming</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="nav-left">
+            <h1 class="logo">Otaku<span class="accent">Cloud</span></h1>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Anime</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Genres</a></li>
+                <li><a href="#">My List</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search anime...">
+            </div>
+            <button class="btn-subscribe">Subscribe</button>
+            <div class="avatar"></div>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero-slider">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="tags">
+                <span class="rating">TV-MA</span>
+                <span class="duration">24m</span>
+                <span class="genre">Action • Fantasy • Shounen</span>
+            </div>
+            <h2 class="hero-title">Solo Leveling</h2>
+            <p class="hero-desc">In a world where hunters with magical powers must battle deadly monsters to protect the human race from certain annihilation, a notoriously weak hunter named Sung Jinwoo finds himself in a seemingly endless struggle for survival.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary"><i class="fas fa-play"></i> Watch Now</button>
+                <button class="btn-secondary"><i class="fas fa-plus"></i> Add to List</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="content-row">
+            <h3>Trending Anime</h3>
+            <div class="carousel" id="trending-carousel">
+                </div>
+        </section>
+
+        <section class="content-row">
+            <h3>Explore Genres</h3>
+            <div class="genre-grid">
+                <div class="genre-card">Action</div>
+                <div class="genre-card">Adventure</div>
+                <div class="genre-card">Fantasy</div>
+                <div class="genre-card">Isekai</div>
+                <div class="genre-card">Romance</div>
+                <div class="genre-card">Comedy</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/* Design System Variables */
+:root {
+    --bg-main: #0b0b0f;
+    --bg-secondary: #111118;
+    --accent: #7c3aed;
+    --accent-glow: rgba(124, 58, 237, 0.6);
+    --text-main: #ffffff;
+    --text-muted: #a0a0b0;
+    --glass-bg: rgba(17, 17, 24, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* Utilities */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.logo .accent {
+    color: var(--accent);
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-main);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: white;
+    margin-left: 0.5rem;
+    outline: none;
+}
+
+.btn-subscribe {
+    background: linear-gradient(45deg, var(--accent), #e11d48);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--accent-glow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-subscribe:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: url('https://i.pravatar.cc/100') center/cover;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+}
+
+/* Hero Section */
+.hero {
+    height: 85vh;
+    background: url('https://image.tmdb.org/t/p/original/w2eEnKq340RjEYKz0Y29S4Zt27V.jpg') center/cover;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, var(--bg-main) 0%, transparent 100%),
+                linear-gradient(to right, rgba(11,11,15,0.9) 0%, transparent 60%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    animation: fadeIn 1s ease-out;
+}
+
+.tags {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.hero-desc {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-primary {
+    background: white;
+    color: black;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background: var(--glass-bg);
+    color: white;
+    border: 1px solid var(--glass-border);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Rows & Cards */
+.container {
+    padding: 2rem 4rem;
+}
+
+.content-row {
+    margin-bottom: 3rem;
+}
+
+.content-row h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.carousel {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: none; /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* Chrome */
+}
+
+.anime-card {
+    min-width: 220px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.anime-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 20px var(--accent-glow);
+}
+
+.anime-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(11,11,15,0.9), transparent);
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.anime-card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* Genres Grid */
+.genre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.genre-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.genre-card:hover {
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: translateY(-5px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+// Mock Data to simulate Consumet / AniList API response
+const mockAnimeData = [
+    {
+        id: "jujutsu-kaisen",
+        title: "Jujutsu Kaisen",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx113415-bbBWj4pEFseh.jpg",
+        rating: "9.8"
+    },
+    {
+        id: "frieren",
+        title: "Frieren: Beyond Journey's End",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx154587-n142B4X2ZtqO.jpg",
+        rating: "9.9"
+    },
+    {
+        id: "one-piece",
+        title: "One Piece",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-YCDignzjclQl.jpg",
+        rating: "9.5"
+    },
+    {
+        id: "demon-slayer",
+        title: "Demon Slayer",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-PEn1CTc93DQl.jpg",
+        rating: "9.6"
+    },
+    {
+        id: "attack-on-titan",
+        title: "Attack on Titan",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx104578-laZZFvvXEphe.jpg",
+        rating: "9.8"
+    },
+    {
+        id: "chainsaw-man",
+        title: "Chainsaw Man",
+        image: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-NuFVXwOQuA2x.jpg",
+        rating: "9.4"
+    }
+];
+
+// Function to generate Anime Cards dynamically
+function populateTrendingCarousel() {
+    const carousel = document.getElementById('trending-carousel');
+    
+    mockAnimeData.forEach(anime => {
+        const card = document.createElement('div');
+        card.className = 'anime-card';
+        card.innerHTML = `
+            <img src="${anime.image}" alt="${anime.title}">
+            <div class="card-overlay">
+                <h4>${anime.title}</h4>
+                <div style="display:flex; justify-content:space-between; margin-top: 5px;">
+                    <span style="color: gold;"><i class="fas fa-star"></i> ${anime.rating}</span>
+                    <i class="fas fa-play-circle" style="color: var(--accent); font-size: 1.2rem;"></i>
+                </div>
+            </div>
+        `;
+        
+        // Simulating Next.js router push
+        card.addEventListener('click', () => {
+            console.log(`Navigating to /anime/${anime.id}`);
+            alert(`In the React app, this would route to /anime/${anime.id}`);
+        });
+
+        carousel.appendChild(card);
+    });
+}
+
+// Navbar Scroll Effect (Glassmorphism transition)
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        nav.style.background = 'rgba(11, 11, 15, 0.9)';
+        nav.style.borderBottom = '1px solid var(--glass-border)';
+    } else {
+        nav.style.background = 'var(--glass-bg)';
+        nav.style.borderBottom = '1px solid transparent';
+    }
+});
+
+// Initialize app
+document.addEventListener('DOMContentLoaded', () => {
+    populateTrendingCarousel();
+});
+
+// Note on Video Integration: 
+// In the Next.js version, you will pass the .m3u8 streaming link fetched from Consumet 
+// into a Video.js component on the /watch/[episodeId] page.
