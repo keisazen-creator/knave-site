@@ -1,8 +1,5 @@
 # 🌐 Knave Site
 
-<!-- 🔖 Topics -->
-<!-- portfolio personal-website developer vite tailwindcss web-app -->
-
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7B3FE4,100:B06CFF&height=200&section=header&text=Knave.in&fontSize=40&fontColor=ffffff&animation=fadeIn" />
 </p>
@@ -35,7 +32,7 @@
 
 - 👨‍💻 My profile & developer identity  
 - 📦 Projects & apps  
-- 📱 APK downloads  
+- 📱 APK downloads (like OtakuCloud)  
 - 📊 Status & updates  
 
 This site acts as a **central hub for everything I build**.
@@ -56,17 +53,16 @@ This site acts as a **central hub for everything I build**.
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="https://i.imgur.com/6I2c883.png" width="80%" />
+  <img src="luffy.jpg" width="80%" />
 </p>
 
 ---
 
 ## ⚙️ Tech Stack
 
-- Vite  
-- TypeScript  
-- TailwindCSS  
-- Modern UI/UX  
+- HTML  
+- CSS  
+- JavaScript  
 
 ---
 
@@ -93,10 +89,11 @@ New features and improvements are being added regularly.
 ```
 knave-site/
 │
-├── src/
-├── public/
 ├── index.html
-├── package.json
+├── style.css
+├── script.js
+├── Otakucloud_v1.0.apk
+├── luffy.jpg
 └── README.md
 ```
 
