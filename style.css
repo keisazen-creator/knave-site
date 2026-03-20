@@ -85,7 +85,7 @@ body {
   filter: drop-shadow(4px 4px 0px var(--black));
 }
 .decor-1 { top: 20%; left: 10%; animation: float 4s infinite; }
-.decor-2 { top: 30%; right: 15%; animation: floatReverse 5s infinite; font-size: 4rem; }
+.decor-2 { top: 30%; right: 20%; animation: floatReverse 5s infinite; font-size: 4rem; }
 .decor-3 { bottom: 20%; left: 20%; animation: float 6s infinite; }
 .decor-4 { top: 60%; right: 10%; animation: floatReverse 4.5s infinite; }
 
