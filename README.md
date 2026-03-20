@@ -56,7 +56,7 @@ This site acts as a **central hub for everything I build**.
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="https://i.imgur.com/6I2c3.png" width="80%" />
+  <img src="https://i.imgur.com/6I2c883.png" width="80%" />
 </p>
 
 ---
